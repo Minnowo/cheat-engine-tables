@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="34">
+  <Forms>
+    <UDF1 Class="TCEForm" Encoding="Ascii85">b7Ej%2nldAU:MM2b.}cxWeIh0Gi32eO*Ft$Wn{Y6%{mcIVSdlR9Fkwal+{5QnNpI$=7,zGoLEqjnV-i7R=ffx00</UDF1>
+  </Forms>
+  <CheatEntries>
+    <CheatEntry>
+      <ID>7</ID>
+      <Description>"Combo 1"</Description>
+      <LastState Value="0" RealAddress="7076AE78"/>
+      <VariableType>4 Bytes</VariableType>
+      <Address>"UnityPlayer.dll"+019B8F20</Address>
+      <Offsets>
+        <Offset>A8</Offset>
+        <Offset>28</Offset>
+        <Offset>18</Offset>
+        <Offset>30</Offset>
+        <Offset>608</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>8</ID>
+      <Description>"Combo 2"</Description>
+      <LastState Value="0" RealAddress="7076AE78"/>
+      <VariableType>4 Bytes</VariableType>
+      <Address>"UnityPlayer.dll"+019B8F20</Address>
+      <Offsets>
+        <Offset>A8</Offset>
+        <Offset>28</Offset>
+        <Offset>18</Offset>
+        <Offset>B0</Offset>
+        <Offset>620</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>15</ID>
+      <Description>"Hp 1"</Description>
+      <LastState Value="100" RealAddress="7075A51C"/>
+      <VariableType>4 Bytes</VariableType>
+      <Address>"UnityPlayer.dll"+019B8F20</Address>
+      <Offsets>
+        <Offset>4C</Offset>
+        <Offset>28</Offset>
+        <Offset>18</Offset>
+        <Offset>30</Offset>
+        <Offset>5C0</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>17</ID>
+      <Description>"Hp 3"</Description>
+      <LastState Value="100" RealAddress="7075A51C"/>
+      <VariableType>4 Bytes</VariableType>
+      <Address>"UnityPlayer.dll"+019B8F20</Address>
+      <Offsets>
+        <Offset>4C</Offset>
+        <Offset>28</Offset>
+        <Offset>18</Offset>
+        <Offset>130</Offset>
+        <Offset>5F0</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>16</ID>
+      <Description>"Hp 2"</Description>
+      <LastState Value="100" RealAddress="7075A51C"/>
+      <VariableType>4 Bytes</VariableType>
+      <Address>"UnityPlayer.dll"+019B8F20</Address>
+      <Offsets>
+        <Offset>4C</Offset>
+        <Offset>28</Offset>
+        <Offset>18</Offset>
+        <Offset>B0</Offset>
+        <Offset>5D8</Offset>
+      </Offsets>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

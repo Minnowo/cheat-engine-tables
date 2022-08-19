@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="34">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>9</ID>
+      <Description>"Money"</Description>
+      <VariableType>4 Bytes</VariableType>
+      <Address>"popcapgame1.exe"+00119014</Address>
+      <Offsets>
+        <Offset>80</Offset>
+        <Offset>4</Offset>
+        <Offset>0</Offset>
+        <Offset>3E0</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>11</ID>
+      <Description>"Fertalizer"</Description>
+      <VariableType>4 Bytes</VariableType>
+      <Address>"popcapgame1.exe"+00072574</Address>
+      <Offsets>
+        <Offset>250</Offset>
+        <Offset>0</Offset>
+        <Offset>4</Offset>
+        <Offset>70</Offset>
+        <Offset>34</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>24</ID>
+      <Description>"Giant Tree Fertalizer"</Description>
+      <VariableType>4 Bytes</VariableType>
+      <Address>"popcapgame1.exe"+00119014</Address>
+      <Offsets>
+        <Offset>288</Offset>
+        <Offset>0</Offset>
+        <Offset>0</Offset>
+        <Offset>3E0</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>13</ID>
+      <Description>"Bug Spray"</Description>
+      <VariableType>4 Bytes</VariableType>
+      <Address>"popcapgame1.exe"+00072574</Address>
+      <Offsets>
+        <Offset>254</Offset>
+        <Offset>8</Offset>
+        <Offset>8</Offset>
+        <Offset>2C</Offset>
+        <Offset>34</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>69</ID>
+      <Description>"Chocolate"</Description>
+      <VariableType>4 Bytes</VariableType>
+      <Address>"popcapgame1.exe"+00119014</Address>
+      <Offsets>
+        <Offset>280</Offset>
+        <Offset>14</Offset>
+        <Offset>70</Offset>
+        <Offset>4</Offset>
+        <Offset>4FC</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>39</ID>
+      <Description>"I Zombie Win Streak"</Description>
+      <VariableType>4 Bytes</VariableType>
+      <Address>"popcapgame1.exe"+0010D8C4</Address>
+      <Offsets>
+        <Offset>6C</Offset>
+        <Offset>178</Offset>
+        <Offset>4</Offset>
+        <Offset>174</Offset>
+        <Offset>C</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>66</ID>
+      <Description>"Vasebreaker Streak"</Description>
+      <Color>000000</Color>
+      <VariableType>4 Bytes</VariableType>
+      <Address>"THREADSTACK0"-0000057C</Address>
+      <Offsets>
+        <Offset>6C</Offset>
+        <Offset>178</Offset>
+        <Offset>2AC</Offset>
+        <Offset>15C</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>72</ID>
+      <Description>"Giant Tree Height"</Description>
+      <VariableType>4 Bytes</VariableType>
+      <Address>"popcapgame1.exe"+00119014</Address>
+      <Offsets>
+        <Offset>154</Offset>
+        <Offset>4A4</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>14</ID>
+      <Description>"No Money Gain"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+// originalcode:
+// add [eax+50],edx
+// mov ecx,[eax+50]
+
+jmp returnhere
+
+"popcapgame1.exe"+3375F:
+jmp newmem
+nop
+
+returnhere:
+
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"popcapgame1.exe"+3375F:
+add [eax+50],edx
+mov ecx,[eax+50]
+//Alt: db 01 50 50 8B 48 50
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>20</ID>
+      <Description>"No Money Usage In Shop"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+// originalcode:
+// sub [ecx+50],eax
+// mov eax,[ecx+50]
+
+jmp returnhere
+
+"popcapgame1.exe"+976AA:
+jmp newmem
+nop
+
+returnhere:
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"popcapgame1.exe"+976AA:
+sub [ecx+50],eax
+mov eax,[ecx+50]
+//Alt: db 29 41 50 8B 41 50
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>17</ID>
+      <Description>"Replace Sun Being Given"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+add [eax+00005578],ecx
+
+exit:
+jmp returnhere
+
+"popcapgame1.exe"+1E6E0:
+jmp newmem
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"popcapgame1.exe"+1E6E0:
+add [eax+00005578],ecx
+//Alt: db 01 88 78 55 00 00
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>25</ID>
+      <Description>"No Sun Usage"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+jmp returnhere
+
+"popcapgame1.exe"+1E846:
+jmp newmem
+nop
+
+returnhere:
+
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"popcapgame1.exe"+1E846:
+mov [edi+00005578],esi
+//Alt: db 89 B7 78 55 00 00
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>30</ID>
+      <Description>"Streak Increase For I Zombie Puzzle"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+add [edi+6C], #69
+call popcapgame1.exe+F340
+
+// originalcode:
+// inc [edi+6C]
+// call popcapgame1.exe+F340
+
+
+jmp returnhere
+
+"popcapgame1.exe"+2CB9C:
+jmp newmem
+nop 3
+
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"popcapgame1.exe"+2CB9C:
+inc [edi+6C]
+call popcapgame1.exe+F340
+//Alt: db FF 47 6C E8 9C 27 FE FF
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>73</ID>
+      <Description>"No description"</Description>
+      <VariableType>4 Bytes</VariableType>
+      <Address>1C4D5EF8</Address>
+    </CheatEntry>
+  </CheatEntries>
+  <CheatCodes>
+    <CodeEntry Color="80000008">
+      <Description>Give Money :add [eax+50],edx</Description>
+      <AddressString>popcapgame1.exe+3375F</AddressString>
+      <Before>
+        <Byte>80</Byte>
+        <Byte>4C</Byte>
+        <Byte>09</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Before>
+      <Actual>
+        <Byte>01</Byte>
+        <Byte>50</Byte>
+        <Byte>50</Byte>
+      </Actual>
+      <After>
+        <Byte>8B</Byte>
+        <Byte>48</Byte>
+        <Byte>50</Byte>
+        <Byte>81</Byte>
+        <Byte>F9</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="80000008">
+      <Description>Sun Increase :add [eax+00005578],ecx</Description>
+      <AddressString>popcapgame1.exe+1E6E0</AddressString>
+      <Before>
+        <Byte>CC</Byte>
+        <Byte>CC</Byte>
+        <Byte>CC</Byte>
+        <Byte>CC</Byte>
+        <Byte>CC</Byte>
+      </Before>
+      <Actual>
+        <Byte>01</Byte>
+        <Byte>88</Byte>
+        <Byte>78</Byte>
+        <Byte>55</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>8B</Byte>
+        <Byte>88</Byte>
+        <Byte>78</Byte>
+        <Byte>55</Byte>
+        <Byte>00</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="80000008">
+      <Description>Subtract Sun :mov [edi+00005578],esi</Description>
+      <AddressString>popcapgame1.exe+1E846</AddressString>
+      <Before>
+        <Byte>D8</Byte>
+        <Byte>7F</Byte>
+        <Byte>0C</Byte>
+        <Byte>2B</Byte>
+        <Byte>F3</Byte>
+      </Before>
+      <Actual>
+        <Byte>89</Byte>
+        <Byte>B7</Byte>
+        <Byte>78</Byte>
+        <Byte>55</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>B0</Byte>
+        <Byte>01</Byte>
+        <Byte>5E</Byte>
+        <Byte>C3</Byte>
+        <Byte>8B</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="80000008">
+      <Description>Subtract Money :sub [ecx+50],eax</Description>
+      <AddressString>popcapgame1.exe+976AA</AddressString>
+      <Before>
+        <Byte>89</Byte>
+        <Byte>4C</Byte>
+        <Byte>09</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Before>
+      <Actual>
+        <Byte>29</Byte>
+        <Byte>41</Byte>
+        <Byte>50</Byte>
+      </Actual>
+      <After>
+        <Byte>8B</Byte>
+        <Byte>41</Byte>
+        <Byte>50</Byte>
+        <Byte>3D</Byte>
+        <Byte>9F</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="80000008">
+      <Description>Increase I Zombie Streak :inc [edi+6C]</Description>
+      <AddressString>popcapgame1.exe+2CB9C</AddressString>
+      <Before>
+        <Byte>75</Byte>
+        <Byte>E7</Byte>
+        <Byte>8B</Byte>
+        <Byte>77</Byte>
+        <Byte>04</Byte>
+      </Before>
+      <Actual>
+        <Byte>FF</Byte>
+        <Byte>47</Byte>
+        <Byte>6C</Byte>
+      </Actual>
+      <After>
+        <Byte>E8</Byte>
+        <Byte>9C</Byte>
+        <Byte>27</Byte>
+        <Byte>FE</Byte>
+        <Byte>FF</Byte>
+      </After>
+    </CodeEntry>
+  </CheatCodes>
+  <UserdefinedSymbols/>
+</CheatTable>
