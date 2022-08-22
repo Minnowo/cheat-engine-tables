@@ -1,0 +1,1949 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="34">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>159</ID>
+      <Description>"Scripts"</Description>
+      <Options moHideChildren="1"/>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+
+ 
+define(GameStart,Fate.exe)
+registerSymbol(GameStart)
+
+alloc(MoneyGainMultiplyer, 4)
+registersymbol(MoneyGainMultiplyer)
+
+// db for byte
+// dw for 2-byte
+// dd for 4-byte
+// dd for float
+// dq for 8-byte
+// dq for double
+MoneyGainMultiplyer:
+  dd #1
+
+{$lua}
+if syntaxcheck then return end
+getAddressList().Control[1].OnSectionClick = nil
+
+
+
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+
+{$asm}
+unregistersymbol(GameStart)
+unregistersymbol(MoneyGainMultiplyer)
+
+dealloc(MoneyGainMultiplyer)
+
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>34</ID>
+          <Description>"No Consume"</Description>
+          <Options moHideChildren="1"/>
+          <LastState Value="" RealAddress="00000000"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>94</ID>
+              <Description>"No Spend Money AOB"</Description>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+
+aobscanmodule(aobNoSpendMoney,Fate.exe,89 50 08 C2 04 00) // should be unique
+registersymbol(aobNoSpendMoney)
+
+aobNoSpendMoney:
+  nop
+  nop
+  nop
+  // 90 means nop, so we can also use this code below
+  //db 90 90 90
+
+[DISABLE]
+
+aobNoSpendMoney:
+  db 89 50 08 C2 04 00
+
+unregistersymbol(aobNoSpendMoney)
+
+{
+// ORIGINAL CODE - INJECTION POINT: Fate.exe+1344BF
+
+Fate.exe+1344B0: 8B 81 DC 03 00 00  - mov eax,[ecx+000003DC]
+Fate.exe+1344B6: 8B 50 08           - mov edx,[eax+08]
+Fate.exe+1344B9: 8B 4C 24 04        - mov ecx,[esp+04]
+Fate.exe+1344BD: 2B D1              - sub edx,ecx
+// ---------- INJECTING HERE ----------
+Fate.exe+1344BF: 89 50 08           - mov [eax+08],edx
+// ---------- DONE INJECTING  ----------
+Fate.exe+1344C2: C2 04 00           - ret 0004
+}
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>96</ID>
+              <Description>"No Skill Point Usage AOB"</Description>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+
+aobscanmodule(aobNoSkillUsage,Fate.exe,FF 89 14 03 00 00) // should be unique
+registersymbol(aobNoSkillUsage)
+
+aobNoSkillUsage:
+  db 90 90 90 90 90 90
+
+[DISABLE]
+
+aobNoSkillUsage:
+  db FF 89 14 03 00 00
+
+unregistersymbol(aobNoSkillUsage)
+
+
+{
+// ORIGINAL CODE - INJECTION POINT: Fate.exe+133DD5
+
+Fate.exe+133DC0: 8B 81 14 03 00 00     - mov eax,[ecx+00000314]
+Fate.exe+133DC6: 85 C0                 - test eax,eax
+Fate.exe+133DC8: 7E 11                 - jle Fate.exe+133DDB
+Fate.exe+133DCA: 8B 44 24 04           - mov eax,[esp+04]
+Fate.exe+133DCE: FF 84 81 D8 07 00 00  - inc [ecx+eax*4+000007D8]
+// ---------- INJECTING HERE ----------
+Fate.exe+133DD5: FF 89 14 03 00 00     - dec [ecx+00000314]
+// ---------- DONE INJECTING  ----------
+Fate.exe+133DDB: C2 04 00              - ret 0004
+Fate.exe+133DDE: CC                    - int 3 
+Fate.exe+133DDF: CC                    - int 3 
+Fate.exe+133DE0: 8B 81 10 03 00 00     - mov eax,[ecx+00000310]
+Fate.exe+133DE6: 85 C0                 - test eax,eax
+Fate.exe+133DE8: 7E 14                 - jle Fate.exe+133DFE
+Fate.exe+133DEA: 8B 91 2C 03 00 00     - mov edx,[ecx+0000032C]
+Fate.exe+133DF0: 42                    - inc edx
+Fate.exe+133DF1: 48                    - dec eax
+Fate.exe+133DF2: 89 91 2C 03 00 00     - mov [ecx+0000032C],edx
+}
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>97</ID>
+              <Description>"No Stat Point Usage AOB"</Description>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+
+aobscanmodule(aobNoSkillPointStrUsage,Fate.exe,2C 03 00 00 89 81 10 03 00 00)
+registersymbol(aobNoSkillPointStrUsage)
+
+aobscanmodule(aobNoSkillPointDexUsage,Fate.exe,34 03 00 00 89 81 10 03 00 00)
+registersymbol(aobNoSkillPointDexUsage)
+
+aobscanmodule(aobNoSkillPointVitUsage,Fate.exe,3C 03 00 00 89 81 10 03 00 00)
+registersymbol(aobNoSkillPointVitUsage)
+
+aobscanmodule(aobNoSkillPointMagicUsage,Fate.exe,89 81 10 03 00 00 C3 CC 53)
+registersymbol(aobNoSkillPointMagicUsage)
+
+aobNoSkillPointStrUsage+04:
+  db 90 90 90 90 90 90
+
+aobNoSkillPointDexUsage+04:
+  db 90 90 90 90 90 90
+
+aobNoSkillPointVitUsage+04:
+  db 90 90 90 90 90 90
+
+aobNoSkillPointMagicUsage:
+  db 90 90 90 90 90 90
+
+
+[DISABLE]
+
+aobNoSkillPointStrUsage+04:
+  db 89 81 10 03 00 00
+
+aobNoSkillPointDexUsage+04:
+  db 89 81 10 03 00 00
+
+aobNoSkillPointVitUsage+04:
+  db 89 81 10 03 00 00
+
+aobNoSkillPointMagicUsage:
+  db 89 81 10 03 00 00
+
+unregistersymbol(aobNoSkillPointStrUsage)
+unregistersymbol(aobNoSkillPointDexUsage)
+unregistersymbol(aobNoSkillPointVitUsage)
+unregistersymbol(aobNoSkillPointMagicUsage)
+
+
+</AssemblerScript>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>106</ID>
+          <Description>"Enchanter"</Description>
+          <Options moHideChildren="1"/>
+          <LastState Value="" RealAddress="00000000"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>108</ID>
+              <Description>"Enchanter Allows All Items"</Description>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+
+aobscanmodule(aobEnchanterAlwaysDoSomething1,Fate.exe,74 49 83 F8 05) // should be unique
+registersymbol(aobEnchanterAlwaysDoSomething1)
+
+aobEnchanterAlwaysDoSomething1:
+  jmp Fate.exe+5EEAF
+
+[DISABLE]
+
+aobEnchanterAlwaysDoSomething1:
+  db 74 49 83 F8 05
+
+unregistersymbol(aobEnchanterAlwaysDoSomething1)
+
+
+{
+// ORIGINAL CODE - INJECTION POINT: Fate.exe+5EE64
+
+Fate.exe+5EE38: E8 6F B9 15 00     - call Fate.exe+1BA7AC
+Fate.exe+5EE3D: 03 D8              - add ebx,eax
+Fate.exe+5EE3F: 83 FB 04           - cmp ebx,04
+Fate.exe+5EE42: 7D 05              - jnl Fate.exe+5EE49
+Fate.exe+5EE44: BB 04 00 00 00     - mov ebx,00000004
+Fate.exe+5EE49: 8B 8E 5C 06 00 00  - mov ecx,[esi+0000065C]
+Fate.exe+5EE4F: 8B 91 E8 05 00 00  - mov edx,[ecx+000005E8]
+Fate.exe+5EE55: 8B BA 7C 05 00 00  - mov edi,[edx+0000057C]
+Fate.exe+5EE5B: 8B 87 1C 02 00 00  - mov eax,[edi+0000021C]
+Fate.exe+5EE61: 83 F8 04           - cmp eax,04
+// ---------- INJECTING HERE ----------
+Fate.exe+5EE64: 74 49              - je Fate.exe+5EEAF
+// ---------- DONE INJECTING  ----------
+Fate.exe+5EE66: 83 F8 05           - cmp eax,05
+Fate.exe+5EE69: 74 44              - je Fate.exe+5EEAF
+Fate.exe+5EE6B: 83 F8 06           - cmp eax,06
+Fate.exe+5EE6E: 74 3F              - je Fate.exe+5EEAF
+Fate.exe+5EE70: 81 C7 F4 01 00 00  - add edi,000001F4
+Fate.exe+5EE76: 57                 - push edi
+Fate.exe+5EE77: 8D 44 24 34        - lea eax,[esp+34]
+Fate.exe+5EE7B: 68 B8 4D 94 00     - push Fate.exe+544DB8
+Fate.exe+5EE80: 50                 - push eax
+Fate.exe+5EE81: E8 5A F3 FB FF     - call Fate.exe+1E1E0
+}
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>107</ID>
+              <Description>"Enchanter Always Does Nothing"</Description>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+
+aobscanmodule(INJECT1,Fate.exe,74 49 83 F8 05) // should be unique
+registersymbol(INJECT1)
+
+aobscanmodule(INJECT2,Fate.exe,74 44 83 F8 06) // should be unique
+registersymbol(INJECT2)
+
+aobscanmodule(INJECT3,Fate.exe,74 3F 81 C7 F4 01 00 00) // should be unique
+registersymbol(INJECT3)
+
+INJECT1:
+  db 90 90
+
+INJECT2:
+  db 90 90
+
+INJECT3:
+  db 90 90
+
+
+
+
+[DISABLE]
+
+INJECT1:
+  db 74 49 83 F8 05
+
+INJECT2:
+  db 74 44 83 F8 06
+
+INJECT3:
+  db 74 3F 81 C7 F4 01 00 00
+
+
+unregistersymbol(INJECT1)
+unregistersymbol(INJECT2)
+unregistersymbol(INJECT3)
+
+{
+// ORIGINAL CODE - INJECTION POINT: Fate.exe+5EE64
+
+Fate.exe+5EE38: E8 6F B9 15 00     - call Fate.exe+1BA7AC
+Fate.exe+5EE3D: 03 D8              - add ebx,eax
+Fate.exe+5EE3F: 83 FB 04           - cmp ebx,04
+Fate.exe+5EE42: 7D 05              - jnl Fate.exe+5EE49
+Fate.exe+5EE44: BB 04 00 00 00     - mov ebx,00000004
+Fate.exe+5EE49: 8B 8E 5C 06 00 00  - mov ecx,[esi+0000065C]
+Fate.exe+5EE4F: 8B 91 E8 05 00 00  - mov edx,[ecx+000005E8]
+Fate.exe+5EE55: 8B BA 7C 05 00 00  - mov edi,[edx+0000057C]
+Fate.exe+5EE5B: 8B 87 1C 02 00 00  - mov eax,[edi+0000021C]
+Fate.exe+5EE61: 83 F8 04           - cmp eax,04
+// ---------- INJECTING HERE ----------
+Fate.exe+5EE64: 74 49              - je Fate.exe+5EEAF
+// ---------- DONE INJECTING  ----------
+Fate.exe+5EE66: 83 F8 05           - cmp eax,05
+Fate.exe+5EE69: 74 44              - je Fate.exe+5EEAF
+Fate.exe+5EE6B: 83 F8 06           - cmp eax,06
+Fate.exe+5EE6E: 74 3F              - je Fate.exe+5EEAF
+Fate.exe+5EE70: 81 C7 F4 01 00 00  - add edi,000001F4
+Fate.exe+5EE76: 57                 - push edi
+Fate.exe+5EE77: 8D 44 24 34        - lea eax,[esp+34]
+Fate.exe+5EE7B: 68 B8 4D 94 00     - push Fate.exe+544DB8
+Fate.exe+5EE80: 50                 - push eax
+Fate.exe+5EE81: E8 5A F3 FB FF     - call Fate.exe+1E1E0
+}
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>105</ID>
+              <Description>"Always Adds Sockets"</Description>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+
+aobscanmodule(aobBetterChanceForSockets1,Fate.exe,73 59 6A 64 6A 00) // should be unique
+registersymbol(aobBetterChanceForSockets1)
+
+aobscanmodule(aobBetterChanceAtSockets2,Fate.exe,7D 48 6A 01 8B CF) // should be unique
+registersymbol(aobBetterChanceAtSockets2)
+
+aobBetterChanceForSockets1:
+  db 90 90
+
+aobBetterChanceAtSockets2:
+  db 90 90
+
+
+
+[DISABLE]
+
+aobBetterChanceForSockets1:
+  db 73 59 6A 64 6A 00
+
+aobBetterChanceAtSockets2:
+  db 7D 48 6A 01 8B CF
+
+unregistersymbol(aobBetterChanceForSockets1)
+unregistersymbol(aobBetterChanceAtSockets2)
+{
+// ORIGINAL CODE - INJECTION POINT: Fate.exe+5EEBD
+
+Fate.exe+5EE90: B3 2B                    - mov bl,2B
+Fate.exe+5EE92: 51                       - push ecx
+Fate.exe+5EE93: 88 9C 24 74 01 00 00     - mov [esp+00000174],bl
+Fate.exe+5EE9A: E8 F1 8C FA FF           - call Fate.exe+7B90
+Fate.exe+5EE9F: 83 C4 18                 - add esp,18
+Fate.exe+5EEA2: C6 84 24 5C 01 00 00 2C  - mov byte ptr [esp+0000015C],2C
+Fate.exe+5EEAA: E9 B8 02 00 00           - jmp Fate.exe+5F167
+Fate.exe+5EEAF: 8B 87 C0 02 00 00        - mov eax,[edi+000002C0]
+Fate.exe+5EEB5: 8B 8F C8 01 00 00        - mov ecx,[edi+000001C8]
+Fate.exe+5EEBB: 3B C1                    - cmp eax,ecx
+// ---------- INJECTING HERE ----------
+Fate.exe+5EEBD: 73 59                    - jae Fate.exe+5EF18
+// ---------- DONE INJECTING  ----------
+Fate.exe+5EEBF: 6A 64                    - push 64
+Fate.exe+5EEC1: 6A 00                    - push 00
+Fate.exe+5EEC3: E8 E8 4D 04 00           - call Fate.exe+A3CB0
+Fate.exe+5EEC8: 83 C4 08                 - add esp,08
+Fate.exe+5EECB: 83 F8 14                 - cmp eax,14
+Fate.exe+5EECE: 7D 48                    - jnl Fate.exe+5EF18
+Fate.exe+5EED0: 6A 01                    - push 01
+Fate.exe+5EED2: 8B CF                    - mov ecx,edi
+Fate.exe+5EED4: E8 E7 1D 05 00           - call Fate.exe+B0CC0
+Fate.exe+5EED9: 8D 97 F4 01 00 00        - lea edx,[edi+000001F4]
+}
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116</ID>
+              <Description>"Unlock Socket Cap"</Description>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+
+aobscanmodule(aobRemoveSocketCap,Fate.exe,73 37 57 51 40) // should be unique
+registersymbol(aobRemoveSocketCap)
+
+aobRemoveSocketCap:
+  db 90 90
+
+
+
+[DISABLE]
+
+aobRemoveSocketCap:
+  db 73 37 57 51 40
+
+unregistersymbol(aobRemoveSocketCap)
+
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>114</ID>
+              <Description>"Makes Item A Weapon"</Description>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+
+aobscanmodule(aobChangeItemType,Fate.exe,8B 87 1C 02 00 00 83 F8 04 74 49 83 F8 05) // should be unique
+registersymbol(aobChangeItemType)
+
+
+aobChangeItemType:
+// [edi+0000021C] is the address that says what item type it is
+// 4 means weapon
+// 5 means armor
+// 6 means ring or necklace
+// 2 means enchantment book???
+  mov [edi+0000021C], (int)4
+  jmp Fate.exe+5EE70
+  nop
+  nop
+
+
+[DISABLE]
+
+aobChangeItemType:
+  db 8B 87 1C 02 00 00 83 F8 04 74 49 83 F8 05
+
+
+unregistersymbol(aobChangeItemType)
+
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>115</ID>
+              <Description>"Always Adds Extra Enchant"</Description>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+
+aobscanmodule(aobEnchanterAlwaysAddsExtraEnchant,Fate.exe,0F 8D F8 00 00 00 8A) // should be unique
+registersymbol(aobEnchanterAlwaysAddsExtraEnchant)
+
+aobscanmodule(aobCantAddSocket,Fate.exe,73 59 6A 64 6A 00) // should be unique
+registersymbol(aobCantAddSocket)
+
+
+aobEnchanterAlwaysAddsExtraEnchant:
+  db 90 90 90 90 90 90
+
+aobCantAddSocket:
+  jmp Fate.exe+5EF18
+
+
+
+[DISABLE]
+
+aobEnchanterAlwaysAddsExtraEnchant:
+  db 0F 8D F8 00 00 00
+
+aobCantAddSocket:
+  db 73 59 6A 64 6A 00
+
+
+unregistersymbol(aobEnchanterAlwaysAddsExtraEnchant)
+unregistersymbol(aobCantAddSocket)
+
+{
+// ORIGINAL CODE - INJECTION POINT: Fate.exe+5EF27
+
+Fate.exe+5EEFC: 88 9C 24 74 01 00 00     - mov [esp+00000174],bl
+Fate.exe+5EF03: E8 88 8C FA FF           - call Fate.exe+7B90
+Fate.exe+5EF08: 83 C4 18                 - add esp,18
+Fate.exe+5EF0B: C6 84 24 5C 01 00 00 2E  - mov byte ptr [esp+0000015C],2E
+Fate.exe+5EF13: E9 84 01 00 00           - jmp Fate.exe+5F09C
+Fate.exe+5EF18: 6A 64                    - push 64
+Fate.exe+5EF1A: 6A 00                    - push 00
+Fate.exe+5EF1C: E8 8F 4D 04 00           - call Fate.exe+A3CB0
+Fate.exe+5EF21: 83 C4 08                 - add esp,08
+Fate.exe+5EF24: 83 F8 32                 - cmp eax,32
+// ---------- INJECTING HERE ----------
+Fate.exe+5EF27: 0F 8D F8 00 00 00        - jnl Fate.exe+5F025
+// ---------- DONE INJECTING  ----------
+Fate.exe+5EF2D: 8A 87 09 01 00 00        - mov al,[edi+00000109]
+Fate.exe+5EF33: 84 C0                    - test al,al
+Fate.exe+5EF35: 0F 85 EA 00 00 00        - jne Fate.exe+5F025
+Fate.exe+5EF3B: 6A FF                    - push -01
+Fate.exe+5EF3D: 6A 01                    - push 01
+Fate.exe+5EF3F: 53                       - push ebx
+Fate.exe+5EF40: 8B CF                    - mov ecx,edi
+Fate.exe+5EF42: E8 E9 7B 05 00           - call Fate.exe+B6B30
+Fate.exe+5EF47: 8D 97 F4 01 00 00        - lea edx,[edi+000001F4]
+Fate.exe+5EF4D: 52                       - push edx
+}
+</AssemblerScript>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>140</ID>
+          <Description>"AOB For Stats And Skill Points"</Description>
+          <Options moHideChildren="1"/>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(aobBaseA, ?? 00 00 00 00 01 00 00 00 ?? ?? ?? ?? 01 00 00 00 00 00 00 00 00 00 00 00 ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? 01 00 00 00 00 00 00 00 00 00 ?? ?? 00 00 00 00 ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? 0? ?? ?? ?? 0? ?? ?? ?? 0? ?? ?? ?? 0? ?? ?? ?? 0? ?? ?? ?? 0? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? 0? 00 00 00 0? 00 00 00 ?? 00 00 00 3E 00 00 00 45 00 00 00 12 00 00 00 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF 13 00 00 00 0B 00 00 00 2C 00 00 00 2E 00 00 00 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF 04 00 00 00 0E 00 00 00 FF FF FF FF FF FF FF FF)
+registersymbol(BaseA)
+label(BaseA)
+
+aobBaseA:
+BaseA:
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+
+unregistersymbol(BaseA)
+
+
+
+
+
+/*
+
+# python code to compute the aob scan, if it stops working, add another fingerprint
+fingerprint = [
+    "42 00 00 00 00 01 00 00 00 58 56 FE 12 01 00 00 00 00 00 00 00 00 00 00 00 58 53 2E 0D 5C 53 2E 0D 5C 53 2E 0D 01 00 00 00 00 00 00 00 00 00 FE 12 00 00 00 00 78 7F 16 0D 18 F9 4B 0D 1F F9 4B 0D 20 F9 4B 0D D8 C9 B4 02 E0 C9 B4 02 E5 C9 B4 02 98 C4 4B 0D 98 C4 4B 0D A0 C4 4B 0D B8 F8 4B 0D BD F8 4B 0D C0 F8 4B 0D 01 00 00 00 00 00 00 00 00 00 00 00 3E 00 00 00 45 00 00 00 12 00 00 00 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF 13 00 00 00 0B 00 00 00 2C 00 00 00 2E 00 00 00 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF 04 00 00 00 0E 00 00 00 FF FF FF FF FF FF FF FF"
+   ,"3F 00 00 00 00 01 00 00 00 50 FC 75 12 01 00 00 00 00 00 00 00 00 00 00 00 58 F6 24 0D 5C F6 24 0D 5C F6 24 0D 01 00 00 00 00 00 00 00 00 00 75 12 00 00 00 00 38 DC 2C 0D 48 E7 B8 02 4F E7 B8 02 50 E7 B8 02 68 02 12 0D 6F 02 12 0D 70 02 12 0D 78 AF 4B 0D 78 AF 4B 0D 80 AF 4B 0D 68 8A 25 0D 6D 8A 25 0D 70 8A 25 0D 00 00 00 00 00 00 00 00 00 00 00 00 3E 00 00 00 45 00 00 00 12 00 00 00 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF 13 00 00 00 0B 00 00 00 2C 00 00 00 2E 00 00 00 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF 04 00 00 00 0E 00 00 00 FF FF FF FF FF FF FF FF"
+   ,"40 00 00 00 00 01 00 00 00 95 00 00 00 01 00 00 00 00 00 00 00 00 00 00 00 D0 F8 CE 12 D4 F8 CE 12 D4 F8 CE 12 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 60 82 16 0D C0 03 26 0D C7 03 26 0D C8 03 26 0D F0 94 25 0D F6 94 25 0D F8 94 25 0D 58 9B 25 0D 58 9B 25 0D 60 9B 25 0D 78 8D 25 0D 7D 8D 25 0D 80 8D 25 0D 01 00 00 00 01 00 00 00 11 00 00 00 3E 00 00 00 45 00 00 00 12 00 00 00 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF 13 00 00 00 0B 00 00 00 2C 00 00 00 2E 00 00 00 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF 04 00 00 00 0E 00 00 00 FF FF FF FF FF FF FF FF"
+   ,"41 00 00 00 00 01 00 00 00 E8 00 00 00 01 00 00 00 00 00 00 00 00 00 00 00 F0 27 B5 02 F4 27 B5 02 F4 27 B5 02 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 08 6E 16 0D B0 B6 4B 0D B7 B6 4B 0D B8 B6 4B 0D 58 FD 2E 0D 61 FD 2E 0D 65 FD 2E 0D E8 9E 25 0D E8 9E 25 0D F0 9E 25 0D F8 87 25 0D FD 87 25 0D 00 88 25 0D 00 00 00 00 00 00 00 00 0B 00 00 00 3E 00 00 00 45 00 00 00 12 00 00 00 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF 13 00 00 00 0B 00 00 00 2C 00 00 00 2E 00 00 00 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF 04 00 00 00 0E 00 00 00 FF FF FF FF FF FF FF FF"
+   ,"41 00 00 00 00 01 00 00 00 E8 00 00 00 01 00 00 00 00 00 00 00 00 00 00 00 B0 DE 3E 0D B4 DE 3E 0D B4 DE 3E 0D 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 F0 70 16 0D 08 88 D8 12 0F 88 D8 12 10 88 D8 12 28 02 1C 0D 33 02 1C 0D 35 02 1C 0D C8 FA 24 0D C8 FA 24 0D D0 FA 24 0D 00 F8 CE 12 05 F8 CE 12 08 F8 CE 12 01 00 00 00 00 00 00 00 0B 00 00 00 3E 00 00 00 45 00 00 00 12 00 00 00 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF 13 00 00 00 0B 00 00 00 2C 00 00 00 2E 00 00 00 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF 04 00 00 00 0E 00 00 00 FF FF FF FF FF FF FF FF"
+   ,"41 00 00 00 00 01 00 00 00 48 44 50 10 01 00 00 00 00 00 00 00 00 00 00 00 00 2F 18 0F 04 2F 18 0F 04 2F 18 0F 01 00 00 00 00 00 00 00 00 00 50 10 00 00 00 00 10 1F 65 10 68 42 FF 0E 6F 42 FF 0E 70 42 FF 0E B0 51 C7 02 B9 51 C7 02 BD 51 C7 02 E0 AD C7 02 E0 AD C7 02 E8 AD C7 02 50 42 FF 0E 55 42 FF 0E 58 42 FF 0E 01 00 00 00 00 00 00 00 00 00 00 00 3E 00 00 00 45 00 00 00 12 00 00 00 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF 13 00 00 00 0B 00 00 00 2C 00 00 00 2E 00 00 00 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF 04 00 00 00 0E 00 00 00 FF FF FF FF FF FF FF FF"
+]
+
+for i in range(len(fingerprint[0])):
+
+    flag = False
+
+    for k in fingerprint[1:]:
+
+        if k[i] == fingerprint[0][i]:
+            continue
+
+        flag = True
+        break
+
+    if flag:
+        print("?",end="")
+    else:
+        print(fingerprint[0][i],end="")
+
+
+*/
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>141</ID>
+              <Description>"Stat Points"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>BaseA+c5</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>142</ID>
+              <Description>"Skill Points"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>BaseA+c9</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>131</ID>
+          <Description>"AOB For Gold"</Description>
+          <Options moHideChildren="1"/>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+
+aobscan(aobMoneyScan, 39 00 00 00 ?? ?? ?? ?? 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 ?? ?? ?? 00 00 00 00 00 00 00 00 00 00 00 00 ?? ?? ?? ?? 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ?? ?? ?? ?? 04 00 00 00 01 ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? 0? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? 0? ?? ?? ?? ?? ?? ?? 0?)
+registersymbol(BaseMoney)
+label(BaseMoney)
+
+aobMoneyScan:
+BaseMoney:
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+
+unregistersymbol(BaseMoney)
+
+
+/*
+# python code to compute the aob scan, if it stops working, add another fingerprint
+fingerprint = [
+    "6B 6B 6B FF F3 FF FF FF 8F 0C 8C 86 00 07 00 94 38 DD 2A ?D 39 00 00 00 ?? ?? ?? ?? 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 FF FF FF 00 00 00 00 00 00 00 00 00 00 00 00 58 C2 8C 0D 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 80 EA 8F 0C 04 00 00 00 01 FF FF FF FF FF FF FF FF FF 3A 0D D0 2A 3A 0D C6 0C B5 86 00 08 00 94 48 DD 2A 0D 39 00 00 00 00 00 00 00 00 01 00 00 00 01 01 01 01 01 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 01 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 38 39 0D 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 90 4A E7 04 04 00 00 00 00 E5 39 0D 48 1F 3A 0D 08 25 3A 0D 08 25 3A 0D 50 E0 97 02 E8 7F 9D 02 10 6B CB 02 00 00 00 00 00 00 00 00 00 00 00 00 00 0D FF 86 05 7C 00 80 50 E0 97 02 E8 7F 9D 02 10 6B CB 02 00 00 00 00 00 00 00 00 00 00 00 00 04 0D F3 86 43 7D 00 80 50 E0 97 02 E8 7F 9D 02 10 6B CB 02 00 00 00 00 00 00 00 00 00 00 00 00 04 00 00 00 06 00 00 00 07 00 00 00 44 00 00 00"
+,   "12 00 00 00 A9 71 33 3F 5A 05 55 25 27 4C 2E 0C 00 0C 17 0F 39 00 00 00 A2 00 00 00 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 30 08 3F 00 00 00 00 00 00 00 00 00 00 00 00 88 78 68 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 20 6D 37 10 04 00 00 00 01 D8 17 BF A7 86 48 3F 7C 05 54 02 29 4D 2E 00 78 0D 14 0F F0 A3 4E 10 07 72 2A BF D4 3B 31 3F 87 A0 31 BE 6C 5E 5E 3E 0C 00 00 0C 6D 4C 2E 00 70 8F 16 0F E8 4D 19 0F 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 E0 77 F0 3E 01 00 00 00 00 00 00 00 00 00 00 00 01 00 00 00 02 00 00 02 43 4D 2E 00 18 2D 44 0F C0 00 A7 02 6D 07 5D 18 0F 4D 2E 08 60 E1 B4 02 90 C7 35 10 0C 00 00 00 C0 D0 E0 F0 FF E4 92 9F 0A 00 00 00 2C 79 37 10 FF FF FF FF E9 72 42 8A 00 00 00 88 92 C7 64 BE C4 48 7C 3E AA 88 51 3F 86 D3 EF BE 10 B0 A3 BD DA 6A 0B BE 00 BA 31 3F C4 C2 33 3F 4E 20 0E BE DE B4 53 BE 7A 31 2B 3F AA 56 33 3F 7F 80 8A BE 4A F3 9D BE 1B 79 12 BF D9 C8 35 3F BA 68 0F 3F ED B5 7F BC 1F 1C 23 BF 66 6F 07 3F 61 ED FA 3D 4C 13 32 3E 9D F5 1E BF A1 20 41 3F A8 66 7C 3D 1F 5B 7C BD 20 51 34 BF 4F 54 34 3F A6 B1 E8 3E B9 AA 0A 3F 69 A8 0A 3F 04 B4 E8 BE 84 F3 C7 3E B4 F2 C7 BE EF E3 16 BF 19 E7 16 3F 7C 04 10 3E E8 65 31 3F 85 64 31 3F BF 03 10 BE 7E 5D 5D 77 00 00 00 00 53 E4 43 00 00 00 00 00 7E 5D 5D 77 00 00 00 00 53 E4 43 00 00 00 00 00 7E 5D 5D 77 00 00 00 00 53 E4 43 00 00 00 00 00 7E 5D 5D 77 00 00 00 00 53 E4 43 00 00 00 00 00 7E 5D 5D 77 00 00 00 00 53 E4 43 00 00 00 00 00 7E 5D 5D 77 00 00 00 00 53 E4 43 00 00 00 00 00 7E 5D 5D 77 00 00 00 00 53 E4 43 00 00 00 00 00 7E 5D 5D 77 00 00 00 00 53 E4 43 00 00 00 00 00 7E 5D 5D 77 00 00 00 00 53 E4 43 00 00 00 00 00 7E 5D 5D 77 00 00 00 00 53 E4 43 00 00 00 00 00 7E 5D 5D 77 00 00 00 00 53 E4 43 00 00 00 00 00 7E 5D 5D 77 00 00 00 00 53 E4 43 00 00 00 00 00 2A BF 24 3D 60 8C 4E BF A2 5F 25 BC EC DC 16 3F 9A 72 75 8A 00 01 00 88"
+,   "12 00 00 00 94 AE 94 3E 8B 64 9A 32 CC E1 21 0C A0 0A 17 0D 39 00 00 00 09 01 00 00 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 80 E8 31 0D 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 F8 3E B2 0D 04 00 00 00 01 00 00 00 F6 F9 EB 3D BC 60 92 09 C2 E0 21 08 78 D8 E7 12 B0 EF 20 0D 0D 00 00 00 C0 D0 E0 F0 DF 7B FB 2E 52 01 00 00 84 4A B2 0D 0A 62 F3 01 5A D8 C0 E4 37 22 87 48 42 47 CF B3 51 79 EE AD 7D 79 DC EF FB F6 DF 8F 41 04 02 9F B1 18 02 08 16 04 96 42 13 B0 FF FF A9 78 CA 27 02 00 00 80 90 F2 45 0D 00 00 00 00 10 50 B2 0D 05 00 00 00 A6 78 CF 27 00 01 00 8C 28 1A 44 0D 08 4C B2 0D F8 4C B2 0D 07 00 00 00 A3 78 CC 27 04 02 00 80 30 35 44 0D 80 4C B2 0D 20 4C B2 0D C0 00 1E 01 A0 78 D1 27 E7 03 00 8C 78 27 28 0D B8 5C B2 0D D0 5C B2 0D 35 0F E2 BE 9D 78 D6 27 21 04 00 80 10 C5 50 0D 48 51 B2 0D 40 50 B2 0D 48 5E 72 BD 9A 78 DB 27 D2 05 00 80 F8 25 46 0D 50 6A B2 0D 08 67 B2 0D 85 FB D5 BE 97 78 D8 27 11 06 00 80 30 BD 50 0D 00 00 00 00 40 50 B2 0D 18 89 96 BD 94 78 DD 27 B3 07 00 80 C8 C4 50 0D A8 4B B2 0D 68 4F B2 0D 85 FB D5 BE 91 78 E2 27 11 08 00 80 D0 1D 46 0D 80 4C B2 0D 70 68 B2 0D F0 27 5D BE 8E 78 E7 27 23 09 00 8C 08 22 46 0D 38 6A B2 0D B0 4C B2 0D A8 8D DC BE 8B 78 E4 27 67 0A 00 80 F8 CA 50 0D 28 4D B2 0D 50 4F B2 0D 57 6D 71 BD 88 78 E9 27 B0 0B 00 80 00 24 46 0D 10 4D B2 0D F8 4F B2 0D 5C E2 99 BE 85 78 EE 27 C1 0C 00 80 10 93 29 0D 00 00 00 00 40 56 B2 0D 06 F0 92 BD 82 78 F3 27 24 0D 00 8C D8 C2 B2 0D F0 57 B2 0D 90 54 B2 0D 6D E6 8F BD 7F 78 F0 27 9B 0E 00 8C 70 C9 20 0D E0 67 B2 0D D0 4A B2 0D 29 00 14 BE 7C 78 F5 27 2B 0F 00 80 28 11 46 0D 80 4C B2 0D 20 67 B2 0D 29 00 14 BE 79 78 FA 27 7E 10 00 8C D8 C9 50 0D C0 4E B2 0D C8 4C B2 0D B1 E7 C3 BD 76 78 FF 27 0F 11 00 8C 40 C4 B2 0D 08 58 B2 0D 68 58 B2 0D 34 D0 BC BD 73 78 FC 27 91 12 00 80 48 12 46 0D 20 4C B2 0D 20 67 B2 0D 35 0F E2 BE 70 78 81 27 E2 13 00 80 C8 33 44 0D 80 67 B2 0D"
+,   "12 00 00 00 43 00 00 00 52 F1 B5 04 ED EC 22 0C 00 0D 17 0D 39 00 00 00 53 01 00 00 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 E0 EB 31 0D 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 40 0B B3 0D 04 00 00 00 01 01 00 00 4D 01 00 00 77 F1 B4 20 E3 ED 22 00 90 97 50 0D 38 D2 00 0E 4B 01 00 00 CC 02 00 00 CD 02 00 00 D0 02 00 00 D1 02 00 00 CE 02 00 00 CF 02 00 00 C4 02 00 00 C5 02 00 00 93 33 4A BF 03 01 00 02 23 EF 22 00 F0 7D BC 0D 50 FD BC 0D 6F 95 8D BF 5C 95 8D BF C9 94 8D BF 57 62 AF BF 4E 62 AF BF 63 62 AF BF 8B 62 AF BF AD 62 AF BF A7 58 10 BF 3C AE DE BE 77 A8 93 BE B1 65 08 BF 18 F9 0B BF 54 7E 17 BF A5 C5 FB BE 1B 81 D5 BE 55 B6 41 BE 21 1E CE BC 21 D8 07 BF 53 02 D7 BE D1 F1 B5 87 C6 ED 22 08 02 00 00 00 01 00 00 00 04 00 00 00 11 00 00 00 02 00 00 00 00 00 00 00 03 00 00 00 03 00 00 00 12 00 00 00 01 00 00 00 00 00 00 00 11 00 00 00 12 00 00 00 11 00 00 00 09 00 00 00 02 00 00 00 12 00 00 00 03 00 00 00 0A 00 00 00 07 00 00 00 02 00 00 00 09 00 00 00 40 00 00 00 45 00 00 00 4D 00 00 00 0B 00 00 00 02 00 00 00 07 00 00 00 0B 00 00 00 01 00 00 00 0A 00 00 00 03 00 00 00 0B 00 00 00 00 00 00 00 0B 00 00 00 0B 00 00 00 64 00 00 00 35 00 00 00 29 00 00 00 B2 00 00 00 B1 00 00 00 AF 00 00 00 B1 00 00 00 A2 00 00 00 B3 00 00 00 B0 00 00 00 B0 00 00 00 A1 00 00 00 B3 00 00 00 B2 00 00 00 A2 00 00 00 A1 00 00 00 AA 00 00 00 A2 00 00 00 B1 00 00 00 B0 00 00 00 A1 00 00 00 A9 00 00 00 B1 00 00 00 AC 00 00 00 AA 00 00 00 4D 00 00 00 6E 00 00 00 73 00 00 00 B1 00 00 00 A8 00 00 00 AC 00 00 00 B2 00 00 00 A8 00 00 00 B0 00 00 00 A9 00 00 00 A8 00 00 00 B3 00 00 00 A8 00 00 00 A8 00 00 00 8A 00 00 00 7E 00 00 00 64 00 00 00 4D 00 00 00 51 00 00 00 59 00 00 00 30 00 00 00 24 00 00 00 1F 00 00 00 34 00 00 00 45 00 00 00 83 00 00 00 5C 00 00 00 25 00 00 00 12 00 00 00 0A 00 00 00 4D 00 00 00 11 00 00 00 27 00 00 00 20 00 00 00 09 00 00 00 19 00 00 00 08 00 00 00"
+,   "12 00 00 00 A9 71 33 3F 5A 05 55 25 27 4C 2E 0C 00 0C 17 0F 39 00 00 00 A2 00 00 00 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 30 08 3F 00 00 00 00 00 00 00 00 00 00 00 00 88 78 68 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 20 6D 37 10 04 00 00 00 01 D8 17 BF A7 86 48 3F 7C 05 54 02 29 4D 2E 00 78 0D 14 0F F0 A3 4E 10 07 72 2A BF D4 3B 31 3F 87 A0 31 BE 6C 5E 5E 3E 0C 00 00 0C 6D 4C 2E 00 70 8F 16 0F E8 4D 19 0F 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 E0 77 F0 3E 01 00 00 00 00 00 00 00 00 00 00 00 01 00 00 00 02 00 00 02 43 4D 2E 00 18 2D 44 0F C0 00 A7 02 6D 07 5D 18 0F 4D 2E 08 60 E1 B4 02 90 C7 35 10 0C 00 00 00 C0 D0 E0 F0 FF E4 92 9F 0A 00 00 00 2C 79 37 10 FF FF FF FF E9 72 42 8A 00 00 00 88 92 C7 64 BE C4 48 7C 3E AA 88 51 3F 86 D3 EF BE 10 B0 A3 BD DA 6A 0B BE 00 BA 31 3F C4 C2 33 3F 4E 20 0E BE DE B4 53 BE 7A 31 2B 3F AA 56 33 3F 7F 80 8A BE 4A F3 9D BE 1B 79 12 BF D9 C8 35 3F BA 68 0F 3F ED B5 7F BC 1F 1C 23 BF 66 6F 07 3F 61 ED FA 3D 4C 13 32 3E 9D F5 1E BF A1 20 41 3F A8 66 7C 3D 1F 5B 7C BD 20 51 34 BF 4F 54 34 3F A6 B1 E8 3E B9 AA 0A 3F 69 A8 0A 3F 04 B4 E8 BE 84 F3 C7 3E B4 F2 C7 BE EF E3 16 BF 19 E7 16 3F 7C 04 10 3E E8 65 31 3F 85 64 31 3F BF 03 10 BE 7E 5D 5D 77 00 00 00 00 53 E4 43 00 00 00 00 00 7E 5D 5D 77 00 00 00 00 53 E4 43 00 00 00 00 00 7E 5D 5D 77 00 00 00 00 53 E4 43 00 00 00 00 00 7E 5D 5D 77 00 00 00 00 53 E4 43 00 00 00 00 00 7E 5D 5D 77 00 00 00 00 53 E4 43 00 00 00 00 00 7E 5D 5D 77 00 00 00 00 53 E4 43 00 00 00 00 00 7E 5D 5D 77 00 00 00 00 53 E4 43 00 00 00 00 00 7E 5D 5D 77 00 00 00 00 53 E4 43 00 00 00 00 00 7E 5D 5D 77 00 00 00 00 53 E4 43 00 00 00 00 00 7E 5D 5D 77 00 00 00 00 53 E4 43 00 00 00 00 00 7E 5D 5D 77 00 00 00 00 53 E4 43 00 00 00 00 00 7E 5D 5D 77 00 00 00 00 53 E4 43 00 00 00 00 00 2A BF 24 3D 60 8C 4E BF A2 5F 25 BC EC DC 16 3F 9A 72 75 8A 00 01 00 88"
+,   "E2 F2 92 C0 E2 E4 D2 C0 0D 00 03 B9 CE 02 00 94 F8 86 45 10 39 00 00 00 BB 01 00 00 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 0D 21 10 00 00 00 00 00 00 00 00 00 00 00 00 C8 51 10 0F 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 08 8F 23 10 04 00 00 00 01 EE 27 10 D8 EE 27 10 98 F4 27 10 98 F4 27 10 C6 01 D8 B9 C7 03 00 94 C8 85 45 10 39 00 00 00 00 00 00 00 00 01 00 00 00 01 01 01 01 01 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 D7 27 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 F0 59 B0 14 04 00 00 00 00 5C 28 10 B0 5C 28 10 70 62 28 10 70 62 28 10 BF 01 91 B9 38 04 00 94 A8 86 45 10 7F 00 00 00 00 00 00 00 00 01 00 00 00 01 01 01 01 01 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+,   "12 00 00 00 00 00 00 00 E8 86 77 AF 28 B7 27 0C B0 0C 17 0D 39 00 00 00 AC 01 00 00 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 F0 EA 31 0D 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 B8 4F B8 0D 04 00 00 00 01 00 00 00 00 00 00 00 E5 86 77 A2 26 B6 27 08 BB 9B A8 3E 8F 41 AF BE F5 58 19 3F 02 FA 24 3F AD 8E A9 3E F0 46 B0 BE 22 15 19 3F 7D B3 24 3F DC 4B A0 3E 1B 51 A6 BE 2E 8F 1B 3F F6 45 27 3F 14 2F B2 3E 55 8F B9 BE 32 9E 16 3F 17 23 22 3F 51 44 AD 3E AF 44 B4 BE 2C 0A 18 3F E0 9D 23 3F 67 E4 9D 3E 71 BB A3 BE 32 2B 1C 3F BD E7 27 3F 15 49 AF 3E C9 70 B6 BE B8 75 17 3F 68 03 23 3F 08 58 EB BC CA 08 5D 3E C6 D7 6A 3F 8A 66 AA BE CD 67 1E BE 46 07 2C 3E 49 98 67 3F CA FC B7 BE 40 A9 05 BE F3 EF 09 BF B9 AB 0D 3F 9F 0F 1F 3F 8B 97 B3 BE C8 EA AC 3D 01 1E 59 3F C4 71 C6 BE 99 1F 4A 3F 0F 02 29 3E 55 8A EF BE 87 AC B8 3E 99 DC 38 3F 80 3C EF 3D 80 FF 10 BF 03 15 C2 3E ED 8E 16 BF FE 54 10 BD 21 5D 34 3F AD 49 CA BE 50 1C 50 3F 78 18 3C 3E CF 11 DA BE 36 00 B4 3E 41 39 27 BE F1 80 28 3E 24 32 67 3F 67 CA B8 BE BF BC 23 BE 35 E5 29 3E 07 5A 67 3F C4 78 B8 BE D1 55 54 3F 94 73 4A 3E 6A 1E C9 BE 61 10 B0 3E E1 80 98 3D 85 8C 35 BF DC 13 98 BD 8E 77 32 3F 22 B4 71 BE BC 16 07 3D 57 28 94 3C 3D 8F 78 3F A4 76 B4 3E 78 78 16 BF BA 80 C0 BE 63 9C 1F 3F 31 4E 49 3F 7F 87 0D BF BB 8D 8C 3E 17 FF B7 3C 65 C4 54 3F CE EA 09 BF 64 A1 5E 3D 6E 29 01 BE 8C 94 76 3F 1F 02 6D BA 07 10 88 BE 12 A4 1F 3D 27 8A 8C 3D C1 31 A5 BD 61 05 34 3F 71 F6 33 3F BA 7E 24 3E 08 60 5C 3E D7 2C 2E 3F 7C 8C 2E 3F 7D 0F A2 3D D6 56 EF 3D 83 D3 34 3F E0 8F 31 3F 7F 60 E3 3C AA 3D 82 3D 2C 0C 37 3F 28 13 32 3F 2A 32 81 3D 59 2B AD BD 0A 1F 3F 3F 98 28 28 3F C8 86 76 8E 2B B6 27 00 A8 9E AB 0D 28 03 FB 0D 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+]
+
+out = ""
+for i in range(len(fingerprint[0])):
+
+    flag = False
+
+    for k in fingerprint[1:]:
+
+        if k[i] == fingerprint[0][i]:
+            continue
+
+        flag = True
+        break
+
+    if flag:
+        out += "?"
+    else:
+        out += fingerprint[0][i]
+
+while out.startswith("??") or out.startswith(" "):
+    out = out.lstrip("??")
+    out = out.lstrip(" ")
+
+while out.endswith("??") or out.endswith(" "):
+    out = out.rstrip("??")
+    out = out.rstrip(" ")
+print(out)
+print("byte count: " + str(hex(int(len(out.replace(" ",""))/2))))
+*/
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>129</ID>
+              <Description>"Gold"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>BaseMoney+4</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>165</ID>
+          <Description>"AOB For Skills"</Description>
+          <Options moHideChildren="1"/>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(aobStatPoints, 01 00 00 00 00 01 00 00 00 00 00 00 00 00 ?? ?? 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? 00 00 00 00 00 00 00 00 00 00 00 00 ?0 ?? ?? ?? 00 00 00 00 00 00 00 00 00 00 00 00)
+registersymbol(StatPointsBase)
+label(StatPointsBase)
+
+aobStatPoints+168:
+StatPointsBase:
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+unregistersymbol(StatPointsBase)
+
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>167</ID>
+              <Description>"Sword Skill"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>StatPointsBase</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>168</ID>
+              <Description>"Club &amp; Mace Skill"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>StatPointsBase+4</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>179</ID>
+              <Description>"Hammer Skill"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>StatPointsBase+8</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>178</ID>
+              <Description>"Axe Skill"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>StatPointsBase+0C</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>177</ID>
+              <Description>"Spear Skill"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>StatPointsBase+10</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>176</ID>
+              <Description>"Staff Skill"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>StatPointsBase+14</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>175</ID>
+              <Description>"Polearm Skill"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>StatPointsBase+18</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>174</ID>
+              <Description>"Bow &amp; Crossbow Skill"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>StatPointsBase+1C</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>173</ID>
+              <Description>"Critical Strike Skill"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>StatPointsBase+20</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>172</ID>
+              <Description>"Spell Casting Skill"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>StatPointsBase+24</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>171</ID>
+              <Description>"Dual-Wielding Skill"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>StatPointsBase+28</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>170</ID>
+              <Description>"Shield Battle Skill"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>StatPointsBase+2C</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>169</ID>
+              <Description>"Attack Magic Skill"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>StatPointsBase+30</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>181</ID>
+              <Description>"Defense Magic Skill"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>StatPointsBase+34</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>180</ID>
+              <Description>"Charm Magic Skill"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>StatPointsBase+38</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>163</ID>
+          <Description>"Money Gain Multiplyer"</Description>
+          <Options moHideChildren="1"/>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+
+
+newmem:
+  mov edx,[ecx+08]
+  mov eax,[esp+04]
+  imul eax, [MoneyGainMultiplyer]
+  add edx, eax
+  jmp returnhere
+
+"Fate.exe"+15CB30:
+  jmp newmem
+  db 90 90 90 90
+  returnhere:
+ 
+ 
+[DISABLE]
+
+dealloc(newmem)
+
+"Fate.exe"+15CB30:
+  mov edx,[ecx+08]
+  mov eax,[esp+04]
+  add edx, eax
+
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>161</ID>
+              <Description>"Multiplyer"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>MoneyGainMultiplyer</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>95</ID>
+          <Description>"Depricated"</Description>
+          <Options moHideChildren="1"/>
+          <LastState Value="" RealAddress="00000000"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>33</ID>
+              <Description>"No Spend Money"</Description>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+// mov [eax+08],edx
+ret 0004
+
+exit:
+jmp returnhere
+
+"Fate.exe"+1344BF:
+jmp newmem
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"Fate.exe"+1344BF:
+mov [eax+08],edx
+ret 0004
+//Alt: db 89 50 08 C2 04 00
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>36</ID>
+              <Description>"No Skill Point Usage"</Description>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+// dec [ecx+00000314]
+
+exit:
+jmp returnhere
+
+"Fate.exe"+133DD5:
+jmp newmem
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"Fate.exe"+133DD5:
+dec [ecx+00000314]
+//Alt: db FF 89 14 03 00 00
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>51</ID>
+              <Description>"No Stat Point Usage"</Description>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+jmp returnhere
+
+"Fate.exe"+133DF8:
+jmp newmem
+nop
+
+"Fate.exe"+133E58:
+jmp newmem
+nop
+
+"Fate.exe"+133E38:
+jmp newmem
+nop
+
+"Fate.exe"+133E18:
+jmp newmem
+nop
+
+returnhere:
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+
+"Fate.exe"+133DF8:
+mov [ecx+00000310],eax
+//Alt: db 89 81 10 03 00 00
+
+"Fate.exe"+133E58:
+mov [ecx+00000310],eax
+//Alt: db 89 81 10 03 00 00
+
+
+"Fate.exe"+133E38:
+mov [ecx+00000310],eax
+//Alt: db 89 81 10 03 00 00
+
+"Fate.exe"+133E18:
+mov [ecx+00000310],eax
+//Alt: db 89 81 10 03 00 00
+</AssemblerScript>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>136</ID>
+      <Description>"Static Pointers"</Description>
+      <Options moHideChildren="1"/>
+      <LastState Value="" RealAddress="00000000"/>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>46</ID>
+          <Description>"Stat Points"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>"Fate.exe"+0063C480</Address>
+          <Offsets>
+            <Offset>310</Offset>
+            <Offset>544</Offset>
+            <Offset>610</Offset>
+            <Offset>65C</Offset>
+            <Offset>268</Offset>
+          </Offsets>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>182</ID>
+      <Description>"No description"</Description>
+      <VariableType>4 Bytes</VariableType>
+      <Address>12F99860</Address>
+    </CheatEntry>
+  </CheatEntries>
+  <CheatCodes>
+    <CodeEntry Color="20000000">
+      <Description>Lose Money :mov [eax+08],edx</Description>
+      <AddressString>Fate.exe+1344BF</AddressString>
+      <Before>
+        <Byte>4C</Byte>
+        <Byte>24</Byte>
+        <Byte>04</Byte>
+        <Byte>2B</Byte>
+        <Byte>D1</Byte>
+      </Before>
+      <Actual>
+        <Byte>89</Byte>
+        <Byte>50</Byte>
+        <Byte>08</Byte>
+      </Actual>
+      <After>
+        <Byte>C2</Byte>
+        <Byte>04</Byte>
+        <Byte>00</Byte>
+        <Byte>CC</Byte>
+        <Byte>CC</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>Gain Money:mov [ecx+08],edx</Description>
+      <AddressString>Fate.exe+15CB3A</AddressString>
+      <Before>
+        <Byte>24</Byte>
+        <Byte>04</Byte>
+        <Byte>03</Byte>
+        <Byte>D0</Byte>
+        <Byte>50</Byte>
+      </Before>
+      <Actual>
+        <Byte>89</Byte>
+        <Byte>51</Byte>
+        <Byte>08</Byte>
+      </Actual>
+      <After>
+        <Byte>8B</Byte>
+        <Byte>89</Byte>
+        <Byte>98</Byte>
+        <Byte>01</Byte>
+        <Byte>00</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>Use Skillpoint :dec [ecx+00000314]</Description>
+      <AddressString>Fate.exe+133DD5</AddressString>
+      <Before>
+        <Byte>81</Byte>
+        <Byte>D8</Byte>
+        <Byte>07</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Before>
+      <Actual>
+        <Byte>FF</Byte>
+        <Byte>89</Byte>
+        <Byte>14</Byte>
+        <Byte>03</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>C2</Byte>
+        <Byte>04</Byte>
+        <Byte>00</Byte>
+        <Byte>CC</Byte>
+        <Byte>CC</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>Spend Stat Point on Magic:mov [ecx+00000310],eax</Description>
+      <AddressString>Fate.exe+133E58</AddressString>
+      <Before>
+        <Byte>91</Byte>
+        <Byte>44</Byte>
+        <Byte>03</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Before>
+      <Actual>
+        <Byte>89</Byte>
+        <Byte>81</Byte>
+        <Byte>10</Byte>
+        <Byte>03</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>C3</Byte>
+        <Byte>CC</Byte>
+        <Byte>53</Byte>
+        <Byte>8B</Byte>
+        <Byte>5C</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>Spend Stat Point on Vitality :mov [ecx+00000310],eax</Description>
+      <AddressString>Fate.exe+133E38</AddressString>
+      <Before>
+        <Byte>91</Byte>
+        <Byte>3C</Byte>
+        <Byte>03</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Before>
+      <Actual>
+        <Byte>89</Byte>
+        <Byte>81</Byte>
+        <Byte>10</Byte>
+        <Byte>03</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>C3</Byte>
+        <Byte>CC</Byte>
+        <Byte>8B</Byte>
+        <Byte>81</Byte>
+        <Byte>10</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>Spend Stat Point on Dexterity :mov [ecx+00000310],eax</Description>
+      <AddressString>Fate.exe+133E18</AddressString>
+      <Before>
+        <Byte>91</Byte>
+        <Byte>34</Byte>
+        <Byte>03</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Before>
+      <Actual>
+        <Byte>89</Byte>
+        <Byte>81</Byte>
+        <Byte>10</Byte>
+        <Byte>03</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>C3</Byte>
+        <Byte>CC</Byte>
+        <Byte>8B</Byte>
+        <Byte>81</Byte>
+        <Byte>10</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>Spend Stat Point on Strength :mov [ecx+00000310],eax</Description>
+      <AddressString>Fate.exe+133DF8</AddressString>
+      <Before>
+        <Byte>91</Byte>
+        <Byte>2C</Byte>
+        <Byte>03</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Before>
+      <Actual>
+        <Byte>89</Byte>
+        <Byte>81</Byte>
+        <Byte>10</Byte>
+        <Byte>03</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>C3</Byte>
+        <Byte>CC</Byte>
+        <Byte>8B</Byte>
+        <Byte>81</Byte>
+        <Byte>10</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>Change Dungeon Level 1 :mov [esi+000000C4],edi</Description>
+      <AddressString>Fate.exe+E78B4</AddressString>
+      <Before>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+        <Byte>3B</Byte>
+        <Byte>FD</Byte>
+      </Before>
+      <Actual>
+        <Byte>89</Byte>
+        <Byte>BE</Byte>
+        <Byte>C4</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>89</Byte>
+        <Byte>BE</Byte>
+        <Byte>C8</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>Change Dungeon Level 2 :add [eax],al</Description>
+      <AddressString>Fate.exe+E3998</AddressString>
+      <Before>
+        <Byte>FF</Byte>
+        <Byte>89</Byte>
+        <Byte>9E</Byte>
+        <Byte>C4</Byte>
+        <Byte>00</Byte>
+      </Before>
+      <Actual>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>89</Byte>
+        <Byte>9E</Byte>
+        <Byte>C8</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>Pet HP :mov [esi+00000598],eax</Description>
+      <AddressString>Fate.exe+43690</AddressString>
+      <Before>
+        <Byte>00</Byte>
+        <Byte>DB</Byte>
+        <Byte>44</Byte>
+        <Byte>24</Byte>
+        <Byte>08</Byte>
+      </Before>
+      <Actual>
+        <Byte>89</Byte>
+        <Byte>86</Byte>
+        <Byte>98</Byte>
+        <Byte>05</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>8B</Byte>
+        <Byte>44</Byte>
+        <Byte>24</Byte>
+        <Byte>08</Byte>
+        <Byte>D8</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>Item Picked Up :mov [esi+00000594],eax</Description>
+      <AddressString>Fate.exe+657AD</AddressString>
+      <Before>
+        <Byte>C0</Byte>
+        <Byte>8B</Byte>
+        <Byte>4C</Byte>
+        <Byte>24</Byte>
+        <Byte>18</Byte>
+      </Before>
+      <Actual>
+        <Byte>89</Byte>
+        <Byte>86</Byte>
+        <Byte>94</Byte>
+        <Byte>05</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>89</Byte>
+        <Byte>8E</Byte>
+        <Byte>98</Byte>
+        <Byte>05</Byte>
+        <Byte>00</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>Item Put Down :mov [esi+00000594],ebp</Description>
+      <AddressString>Fate.exe+654FC</AddressString>
+      <Before>
+        <Byte>9E</Byte>
+        <Byte>70</Byte>
+        <Byte>05</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Before>
+      <Actual>
+        <Byte>89</Byte>
+        <Byte>AE</Byte>
+        <Byte>94</Byte>
+        <Byte>05</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>74</Byte>
+        <Byte>0A</Byte>
+        <Byte>8B</Byte>
+        <Byte>44</Byte>
+        <Byte>24</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>Item On Ground And On Screen :inc [edi+000000FC]</Description>
+      <AddressString>Fate.exe+D7AEE</AddressString>
+      <Before>
+        <Byte>00</Byte>
+        <Byte>84</Byte>
+        <Byte>C0</Byte>
+        <Byte>74</Byte>
+        <Byte>06</Byte>
+      </Before>
+      <Actual>
+        <Byte>FF</Byte>
+        <Byte>87</Byte>
+        <Byte>FC</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>8B</Byte>
+        <Byte>76</Byte>
+        <Byte>04</Byte>
+        <Byte>85</Byte>
+        <Byte>F6</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>Hover Over Item With Elemental Damage :mov eax,[eax+esi*4]</Description>
+      <AddressString>Fate.exe+6CF07</AddressString>
+      <Before>
+        <Byte>85</Byte>
+        <Byte>B4</Byte>
+        <Byte>02</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Before>
+      <Actual>
+        <Byte>8B</Byte>
+        <Byte>04</Byte>
+        <Byte>B0</Byte>
+      </Actual>
+      <After>
+        <Byte>50</Byte>
+        <Byte>8D</Byte>
+        <Byte>94</Byte>
+        <Byte>24</Byte>
+        <Byte>9C</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>Accesses All Elemental Damage Of All Items In Chest / Inv :mov edx,[ecx+edi*4]</Description>
+      <AddressString>Fate.exe+B2906</AddressString>
+      <Before>
+        <Byte>8E</Byte>
+        <Byte>B4</Byte>
+        <Byte>02</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Before>
+      <Actual>
+        <Byte>8B</Byte>
+        <Byte>14</Byte>
+        <Byte>B9</Byte>
+      </Actual>
+      <After>
+        <Byte>8B</Byte>
+        <Byte>86</Byte>
+        <Byte>AC</Byte>
+        <Byte>01</Byte>
+        <Byte>00</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>Written WHen Hover Item :mov [esp+1C],eax</Description>
+      <AddressString>Fate.exe+47FA</AddressString>
+      <Before>
+        <Byte>24</Byte>
+        <Byte>10</Byte>
+        <Byte>89</Byte>
+        <Byte>46</Byte>
+        <Byte>08</Byte>
+      </Before>
+      <Actual>
+        <Byte>89</Byte>
+        <Byte>44</Byte>
+        <Byte>24</Byte>
+        <Byte>1C</Byte>
+      </Actual>
+      <After>
+        <Byte>8B</Byte>
+        <Byte>44</Byte>
+        <Byte>24</Byte>
+        <Byte>24</Byte>
+        <Byte>8B</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>Hover Over Inventory Slot -&gt; Writes Item ID To Some Address :mov [edi+0000058C],eax</Description>
+      <AddressString>Fate.exe+628D3</AddressString>
+      <Before>
+        <Byte>A6</Byte>
+        <Byte>0F</Byte>
+        <Byte>00</Byte>
+        <Byte>85</Byte>
+        <Byte>C0</Byte>
+      </Before>
+      <Actual>
+        <Byte>89</Byte>
+        <Byte>87</Byte>
+        <Byte>8C</Byte>
+        <Byte>05</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>75</Byte>
+        <Byte>36</Byte>
+        <Byte>83</Byte>
+        <Byte>FE</Byte>
+        <Byte>04</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>Reads Current Hover Item ID Adress :mov ebp,[edi+0000058C]</Description>
+      <AddressString>Fate.exe+67A11</AddressString>
+      <Before>
+        <Byte>82</Byte>
+        <Byte>08</Byte>
+        <Byte>04</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Before>
+      <Actual>
+        <Byte>8B</Byte>
+        <Byte>AF</Byte>
+        <Byte>8C</Byte>
+        <Byte>05</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>89</Byte>
+        <Byte>84</Byte>
+        <Byte>24</Byte>
+        <Byte>80</Byte>
+        <Byte>00</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>Reads Current Item Hover ID Adress 2 :cmp [edi+0000058C],esi</Description>
+      <AddressString>Fate.exe+6C7AA</AddressString>
+      <Before>
+        <Byte>E9</Byte>
+        <Byte>EB</Byte>
+        <Byte>3A</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Before>
+      <Actual>
+        <Byte>39</Byte>
+        <Byte>B7</Byte>
+        <Byte>8C</Byte>
+        <Byte>05</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>75</Byte>
+        <Byte>10</Byte>
+        <Byte>39</Byte>
+        <Byte>B7</Byte>
+        <Byte>94</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>Called When Pickup Item In Inventory :mov ebp,eax</Description>
+      <AddressString>Fate.exe+67A34</AddressString>
+      <Before>
+        <Byte>10</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+        <Byte>74</Byte>
+        <Byte>02</Byte>
+      </Before>
+      <Actual>
+        <Byte>8B</Byte>
+        <Byte>E8</Byte>
+      </Actual>
+      <After>
+        <Byte>8D</Byte>
+        <Byte>4C</Byte>
+        <Byte>24</Byte>
+        <Byte>18</Byte>
+        <Byte>E8</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>Item Placed In Enchanter:mov [eax+0000057C],edx</Description>
+      <AddressString>Fate.exe+72F7E</AddressString>
+      <Before>
+        <Byte>86</Byte>
+        <Byte>E8</Byte>
+        <Byte>05</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Before>
+      <Actual>
+        <Byte>89</Byte>
+        <Byte>90</Byte>
+        <Byte>7C</Byte>
+        <Byte>05</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>89</Byte>
+        <Byte>88</Byte>
+        <Byte>80</Byte>
+        <Byte>05</Byte>
+        <Byte>00</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>Item Removed From Enchanter:mov [eax+0000057C],ebx</Description>
+      <AddressString>Fate.exe+73057</AddressString>
+      <Before>
+        <Byte>86</Byte>
+        <Byte>E8</Byte>
+        <Byte>05</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Before>
+      <Actual>
+        <Byte>89</Byte>
+        <Byte>98</Byte>
+        <Byte>7C</Byte>
+        <Byte>05</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>89</Byte>
+        <Byte>98</Byte>
+        <Byte>80</Byte>
+        <Byte>05</Byte>
+        <Byte>00</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>Enchant Button Click And Item Removed:mov [eax+0000057C],edi</Description>
+      <AddressString>Fate.exe+5F1E5</AddressString>
+      <Before>
+        <Byte>05</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+        <Byte>33</Byte>
+        <Byte>FF</Byte>
+      </Before>
+      <Actual>
+        <Byte>89</Byte>
+        <Byte>B8</Byte>
+        <Byte>7C</Byte>
+        <Byte>05</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>89</Byte>
+        <Byte>B8</Byte>
+        <Byte>80</Byte>
+        <Byte>05</Byte>
+        <Byte>00</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>Change of mov ebx,00000004</Description>
+      <AddressString>Fate.exe+5EE44</AddressString>
+      <Before>
+        <Byte>83</Byte>
+        <Byte>FB</Byte>
+        <Byte>04</Byte>
+        <Byte>7D</Byte>
+        <Byte>05</Byte>
+      </Before>
+      <Actual>
+        <Byte>BB</Byte>
+        <Byte>04</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>8B</Byte>
+        <Byte>8E</Byte>
+        <Byte>5C</Byte>
+        <Byte>06</Byte>
+        <Byte>00</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>Address On The Item In Enchanter Which Says Its Item Type:mov eax,[edi+0000021C]</Description>
+      <AddressString>Fate.exe+5EE5B</AddressString>
+      <Before>
+        <Byte>BA</Byte>
+        <Byte>7C</Byte>
+        <Byte>05</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Before>
+      <Actual>
+        <Byte>8B</Byte>
+        <Byte>87</Byte>
+        <Byte>1C</Byte>
+        <Byte>02</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>83</Byte>
+        <Byte>F8</Byte>
+        <Byte>04</Byte>
+        <Byte>74</Byte>
+        <Byte>49</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>random during enchant call:jmp dword ptr [Fate.exe+53E22C]</Description>
+      <AddressString>Fate.exe+1BA822</AddressString>
+      <Before>
+        <Byte>24</Byte>
+        <Byte>18</Byte>
+        <Byte>C9</Byte>
+        <Byte>C3</Byte>
+        <Byte>CC</Byte>
+      </Before>
+      <Actual>
+        <Byte>FF</Byte>
+        <Byte>25</Byte>
+        <Byte>2C</Byte>
+        <Byte>E2</Byte>
+        <Byte>93</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>FF</Byte>
+        <Byte>25</Byte>
+        <Byte>28</Byte>
+        <Byte>E2</Byte>
+        <Byte>93</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>Lot of 0 mov during enchant :mov [esp+50],00000000</Description>
+      <AddressString>Fate.exe+20272</AddressString>
+      <Before>
+        <Byte>24</Byte>
+        <Byte>54</Byte>
+        <Byte>50</Byte>
+        <Byte>8B</Byte>
+        <Byte>F1</Byte>
+      </Before>
+      <Actual>
+        <Byte>C7</Byte>
+        <Byte>44</Byte>
+        <Byte>24</Byte>
+        <Byte>50</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>C7</Byte>
+        <Byte>44</Byte>
+        <Byte>24</Byte>
+        <Byte>4C</Byte>
+        <Byte>00</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>Big If Chain during enchant:je Fate.exe+5F5AE</Description>
+      <AddressString>Fate.exe+5F56F</AddressString>
+      <Before>
+        <Byte>0C</Byte>
+        <Byte>04</Byte>
+        <Byte>00</Byte>
+        <Byte>85</Byte>
+        <Byte>C0</Byte>
+      </Before>
+      <Actual>
+        <Byte>74</Byte>
+        <Byte>3D</Byte>
+      </Actual>
+      <After>
+        <Byte>8B</Byte>
+        <Byte>86</Byte>
+        <Byte>1C</Byte>
+        <Byte>06</Byte>
+        <Byte>00</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>Item Seed?:push Fate.exe+544C98</Description>
+      <AddressString>Fate.exe+5F796</AddressString>
+      <Before>
+        <Byte>E8</Byte>
+        <Byte>FA</Byte>
+        <Byte>83</Byte>
+        <Byte>FA</Byte>
+        <Byte>FF</Byte>
+      </Before>
+      <Actual>
+        <Byte>68</Byte>
+        <Byte>98</Byte>
+        <Byte>4C</Byte>
+        <Byte>94</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>50</Byte>
+        <Byte>8D</Byte>
+        <Byte>94</Byte>
+        <Byte>24</Byte>
+        <Byte>34</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>Return from enchant function?:ret 0004</Description>
+      <AddressString>Fate.exe+5FBFE</AddressString>
+      <Before>
+        <Byte>00</Byte>
+        <Byte>5B</Byte>
+        <Byte>8B</Byte>
+        <Byte>E5</Byte>
+        <Byte>5D</Byte>
+      </Before>
+      <Actual>
+        <Byte>C2</Byte>
+        <Byte>04</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>CC</Byte>
+        <Byte>CC</Byte>
+        <Byte>CC</Byte>
+        <Byte>CC</Byte>
+        <Byte>CC</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>Begin Enchant Function Call:call Fate.exe+5D170</Description>
+      <AddressString>Fate.exe+20AD2</AddressString>
+      <Before>
+        <Byte>A4</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+        <Byte>50</Byte>
+      </Before>
+      <Actual>
+        <Byte>E8</Byte>
+        <Byte>99</Byte>
+        <Byte>C6</Byte>
+        <Byte>03</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>EB</Byte>
+        <Byte>16</Byte>
+        <Byte>8B</Byte>
+        <Byte>8E</Byte>
+        <Byte>60</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>Enchant Function Start:mov eax,[eax+000005E8]</Description>
+      <AddressString>Fate.exe+5EDA1</AddressString>
+      <Before>
+        <Byte>85</Byte>
+        <Byte>EE</Byte>
+        <Byte>04</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Before>
+      <Actual>
+        <Byte>8B</Byte>
+        <Byte>80</Byte>
+        <Byte>E8</Byte>
+        <Byte>05</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>8B</Byte>
+        <Byte>88</Byte>
+        <Byte>7C</Byte>
+        <Byte>05</Byte>
+        <Byte>00</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>Change of jae Fate.exe+B0D31</Description>
+      <AddressString>Fate.exe+B0CF8</AddressString>
+      <Before>
+        <Byte>01</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+        <Byte>3B</Byte>
+        <Byte>C1</Byte>
+      </Before>
+      <Actual>
+        <Byte>73</Byte>
+        <Byte>37</Byte>
+      </Actual>
+      <After>
+        <Byte>57</Byte>
+        <Byte>51</Byte>
+        <Byte>40</Byte>
+        <Byte>50</Byte>
+        <Byte>E8</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>Gets the number of sockets in an item:mov eax,[esi+000002C0]</Description>
+      <AddressString>Fate.exe+B0CEA</AddressString>
+      <Before>
+        <Byte>83</Byte>
+        <Byte>F8</Byte>
+        <Byte>06</Byte>
+        <Byte>75</Byte>
+        <Byte>47</Byte>
+      </Before>
+      <Actual>
+        <Byte>8B</Byte>
+        <Byte>86</Byte>
+        <Byte>C0</Byte>
+        <Byte>02</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>8B</Byte>
+        <Byte>8E</Byte>
+        <Byte>C8</Byte>
+        <Byte>01</Byte>
+        <Byte>00</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>Gets the max number of sockets for an item:mov ecx,[esi+000001C8]</Description>
+      <AddressString>Fate.exe+B0CF0</AddressString>
+      <Before>
+        <Byte>86</Byte>
+        <Byte>C0</Byte>
+        <Byte>02</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Before>
+      <Actual>
+        <Byte>8B</Byte>
+        <Byte>8E</Byte>
+        <Byte>C8</Byte>
+        <Byte>01</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>3B</Byte>
+        <Byte>C1</Byte>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+        <Byte>57</Byte>
+      </After>
+    </CodeEntry>
+  </CheatCodes>
+  <UserdefinedSymbols/>
+  <DisassemblerComments>
+    <DisassemblerComment>
+      <Address>"Fate.exe"+5EDA7</Address>
+      <Comment>Item ID in the enchanter
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"Fate.exe"+5EE64</Address>
+      <Comment>If item is a weapon
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"Fate.exe"+5EE69</Address>
+      <Comment>If item is armor
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"Fate.exe"+5EE6E</Address>
+      <Comment>If item is ring 
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"Fate.exe"+5EE70</Address>
+      <Comment>Here until Fate.exe+5EEAA enchants nothing
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"Fate.exe"+5EEBD</Address>
+      <Comment>Skip over adding sockets to item
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"Fate.exe"+5EECE</Address>
+      <Comment>Skip over adding sockets to weapon
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"Fate.exe"+B0CD5</Address>
+      <Comment>Get item type
+4 = weapon
+5 = armor
+6 = ring 
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"Fate.exe"+B0CDE</Address>
+      <Comment>Jump if weapon
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"Fate.exe"+B0CE3</Address>
+      <Comment>Jump if armor
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"Fate.exe"+B0CE8</Address>
+      <Comment>Jump if not ring / necklace
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"Fate.exe"+B0CEA</Address>
+      <Comment>The number of sockets in item
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"Fate.exe"+B0CF0</Address>
+      <Comment>Max number of sockets for item type
+</Comment>
+    </DisassemblerComment>
+  </DisassemblerComments>
+</CheatTable>
