@@ -77,7 +77,6 @@ dealloc(newmem)
             <CheatEntry>
               <ID>79</ID>
               <Description>"Multiplyer"</Description>
-              <LastState Value="1" RealAddress="00840000"/>
               <ShowAsSigned>0</ShowAsSigned>
               <VariableType>4 Bytes</VariableType>
               <Address>MoneyGainMultiplyer</Address>
@@ -180,6 +179,27 @@ mov eax,[ecx+50]
 //Alt: db 29 41 50 8B 41 50
 </AssemblerScript>
         </CheatEntry>
+        <CheatEntry>
+          <ID>88</ID>
+          <Description>"No Fog"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+
+"popcapgame1.exe"+18444:
+  mov eax, (int)4000
+  nop
+  //Alt: db B8 A0 0F 00 00 90
+
+ 
+[DISABLE]
+
+"popcapgame1.exe"+18444:
+  mov eax,[esi+000005EC]
+  //Alt: db 8B 86 EC 05 00 00
+</AssemblerScript>
+        </CheatEntry>
       </CheatEntries>
     </CheatEntry>
     <CheatEntry>
@@ -192,7 +212,6 @@ mov eax,[ecx+50]
         <CheatEntry>
           <ID>9</ID>
           <Description>"Money"</Description>
-          <LastState Value="6691" RealAddress="0D0BA9B0"/>
           <VariableType>4 Bytes</VariableType>
           <Address>"popcapgame1.exe"+00119014</Address>
           <Offsets>
@@ -205,7 +224,6 @@ mov eax,[ecx+50]
         <CheatEntry>
           <ID>11</ID>
           <Description>"Fertalizer"</Description>
-          <LastState Value="1056" RealAddress="0D0BAB80"/>
           <VariableType>4 Bytes</VariableType>
           <Address>"popcapgame1.exe"+00072574</Address>
           <Offsets>
@@ -219,7 +237,6 @@ mov eax,[ecx+50]
         <CheatEntry>
           <ID>24</ID>
           <Description>"Giant Tree Fertalizer"</Description>
-          <LastState Value="1001" RealAddress="0D0BABB8"/>
           <VariableType>4 Bytes</VariableType>
           <Address>"popcapgame1.exe"+00119014</Address>
           <Offsets>
@@ -232,7 +249,6 @@ mov eax,[ecx+50]
         <CheatEntry>
           <ID>13</ID>
           <Description>"Bug Spray"</Description>
-          <LastState Value="1012" RealAddress="0D0BAB84"/>
           <VariableType>4 Bytes</VariableType>
           <Address>"popcapgame1.exe"+00072574</Address>
           <Offsets>
@@ -246,7 +262,6 @@ mov eax,[ecx+50]
         <CheatEntry>
           <ID>69</ID>
           <Description>"Chocolate"</Description>
-          <LastState Value="1047" RealAddress="0D0BABB0"/>
           <VariableType>4 Bytes</VariableType>
           <Address>"popcapgame1.exe"+00119014</Address>
           <Offsets>
@@ -260,7 +275,6 @@ mov eax,[ecx+50]
         <CheatEntry>
           <ID>39</ID>
           <Description>"I Zombie Win Streak"</Description>
-          <LastState Value="0" RealAddress="125CDCB4"/>
           <VariableType>4 Bytes</VariableType>
           <Address>"popcapgame1.exe"+0010D8C4</Address>
           <Offsets>
@@ -287,7 +301,6 @@ mov eax,[ecx+50]
         <CheatEntry>
           <ID>72</ID>
           <Description>"Giant Tree Height"</Description>
-          <LastState Value="7" RealAddress="0D0BAA7C"/>
           <VariableType>4 Bytes</VariableType>
           <Address>"popcapgame1.exe"+00119014</Address>
           <Offsets>
@@ -511,9 +524,156 @@ mov eax,[ecx+50]
         <Byte>00</Byte>
       </After>
     </CodeEntry>
+    <CodeEntry Color="80000008">
+      <Description>Fog Timer:mov [esi+000005EC],eax</Description>
+      <AddressString>popcapgame1.exe+1844F</AddressString>
+      <Before>
+        <Byte>85</Byte>
+        <Byte>C0</Byte>
+        <Byte>7E</Byte>
+        <Byte>07</Byte>
+        <Byte>48</Byte>
+      </Before>
+      <Actual>
+        <Byte>89</Byte>
+        <Byte>86</Byte>
+        <Byte>EC</Byte>
+        <Byte>05</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>39</Byte>
+        <Byte>BE</Byte>
+        <Byte>80</Byte>
+        <Byte>55</Byte>
+        <Byte>00</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="80000008">
+      <Description>Check if level has fog :cmp dword ptr [ebp+00005564],03</Description>
+      <AddressString>popcapgame1.exe+D6DA</AddressString>
+      <Before>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+        <Byte>15</Byte>
+        <Byte>74</Byte>
+        <Byte>13</Byte>
+      </Before>
+      <Actual>
+        <Byte>83</Byte>
+        <Byte>BD</Byte>
+        <Byte>64</Byte>
+        <Byte>55</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+        <Byte>03</Byte>
+      </Actual>
+      <After>
+        <Byte>75</Byte>
+        <Byte>0A</Byte>
+        <Byte>C7</Byte>
+        <Byte>85</Byte>
+        <Byte>EC</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="80000008">
+      <Description>Change of mov [edx],al</Description>
+      <AddressString>popcapgame1.exe+236EE1</AddressString>
+      <Before>
+        <Byte>55</Byte>
+        <Byte>08</Byte>
+        <Byte>03</Byte>
+        <Byte>55</Byte>
+        <Byte>FC</Byte>
+      </Before>
+      <Actual>
+        <Byte>88</Byte>
+        <Byte>02</Byte>
+      </Actual>
+      <After>
+        <Byte>EB</Byte>
+        <Byte>DD</Byte>
+        <Byte>8B</Byte>
+        <Byte>E5</Byte>
+        <Byte>5D</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="80000008">
+      <Description>Change of dec [eax+000005EC]</Description>
+      <AddressString>popcapgame1.exe+3F15B</AddressString>
+      <Before>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+        <Byte>8B</Byte>
+        <Byte>45</Byte>
+        <Byte>04</Byte>
+      </Before>
+      <Actual>
+        <Byte>FF</Byte>
+        <Byte>88</Byte>
+        <Byte>EC</Byte>
+        <Byte>05</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>8B</Byte>
+        <Byte>45</Byte>
+        <Byte>00</Byte>
+        <Byte>83</Byte>
+        <Byte>B8</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="80000008">
+      <Description>Change of mov [esi+000005EC],eax</Description>
+      <AddressString>popcapgame1.exe+1844F</AddressString>
+      <Before>
+        <Byte>85</Byte>
+        <Byte>C0</Byte>
+        <Byte>7E</Byte>
+        <Byte>07</Byte>
+        <Byte>48</Byte>
+      </Before>
+      <Actual>
+        <Byte>89</Byte>
+        <Byte>86</Byte>
+        <Byte>EC</Byte>
+        <Byte>05</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>39</Byte>
+        <Byte>BE</Byte>
+        <Byte>80</Byte>
+        <Byte>55</Byte>
+        <Byte>00</Byte>
+      </After>
+    </CodeEntry>
   </CheatCodes>
   <UserdefinedSymbols/>
   <DisassemblerComments>
+    <DisassemblerComment>
+      <Address>"popcapgame1.exe"+D6DA</Address>
+      <Comment>Level has fog
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"popcapgame1.exe"+D6E3</Address>
+      <Comment>Set fog timer 2000
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"popcapgame1.exe"+1844E</Address>
+      <Comment>Decrement Fog Timer
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"popcapgame1.exe"+1844F</Address>
+      <Comment>Update Fog Timer
+</Comment>
+    </DisassemblerComment>
     <DisassemblerComment>
       <Address>"popcapgame1.exe"+129FB6</Address>
       <Comment>Sets the held plant id from zen garden 
