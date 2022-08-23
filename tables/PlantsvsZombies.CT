@@ -52,7 +52,7 @@ dealloc(SunGainMultiplyer)
           <ID>78</ID>
           <Description>"Money Gain Multiplyer"</Description>
           <Options moHideChildren="1"/>
-          <LastState Activated="1"/>
+          <LastState/>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>[ENABLE]
 //code from here to '[DISABLE]' will be used to enable the cheat
@@ -87,6 +87,7 @@ dealloc(newmem)
             <CheatEntry>
               <ID>79</ID>
               <Description>"Multiplyer"</Description>
+              <LastState Value="1" RealAddress="008F0000"/>
               <ShowAsSigned>0</ShowAsSigned>
               <VariableType>4 Bytes</VariableType>
               <Address>MoneyGainMultiplyer</Address>
@@ -97,7 +98,7 @@ dealloc(newmem)
           <ID>89</ID>
           <Description>"Sun Gain Multiplyer"</Description>
           <Options moHideChildren="1"/>
-          <LastState Activated="1"/>
+          <LastState/>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>[ENABLE]
 //code from here to '[DISABLE]' will be used to enable the cheat
@@ -130,6 +131,7 @@ dealloc(newmem)
             <CheatEntry>
               <ID>90</ID>
               <Description>"Multiplyer"</Description>
+              <LastState Value="1" RealAddress="008F0004"/>
               <ShowAsSigned>0</ShowAsSigned>
               <VariableType>4 Bytes</VariableType>
               <Address>SunGainMultiplyer</Address>
@@ -139,7 +141,7 @@ dealloc(newmem)
         <CheatEntry>
           <ID>85</ID>
           <Description>"No Plant Cooldown"</Description>
-          <LastState Activated="1"/>
+          <LastState/>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>[ENABLE]
 //code from here to '[DISABLE]' will be used to enable the cheat
@@ -172,7 +174,7 @@ dealloc(newmem)
         <CheatEntry>
           <ID>25</ID>
           <Description>"No Sun Usage"</Description>
-          <LastState Activated="1"/>
+          <LastState/>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>[ENABLE]
 //code from here to '[DISABLE]' will be used to enable the cheat
@@ -235,7 +237,7 @@ mov eax,[ecx+50]
         <CheatEntry>
           <ID>88</ID>
           <Description>"No Fog"</Description>
-          <LastState Activated="1"/>
+          <LastState/>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>[ENABLE]
 //code from here to '[DISABLE]' will be used to enable the cheat
@@ -265,6 +267,7 @@ mov eax,[ecx+50]
         <CheatEntry>
           <ID>9</ID>
           <Description>"Money"</Description>
+          <LastState Value="18834" RealAddress="0D0BA9B0"/>
           <VariableType>4 Bytes</VariableType>
           <Address>"popcapgame1.exe"+00119014</Address>
           <Offsets>
@@ -277,6 +280,7 @@ mov eax,[ecx+50]
         <CheatEntry>
           <ID>11</ID>
           <Description>"Fertalizer"</Description>
+          <LastState Value="1040" RealAddress="0D0BAB80"/>
           <VariableType>4 Bytes</VariableType>
           <Address>"popcapgame1.exe"+00072574</Address>
           <Offsets>
@@ -290,6 +294,7 @@ mov eax,[ecx+50]
         <CheatEntry>
           <ID>24</ID>
           <Description>"Giant Tree Fertalizer"</Description>
+          <LastState Value="1067" RealAddress="0D0BABB8"/>
           <VariableType>4 Bytes</VariableType>
           <Address>"popcapgame1.exe"+00119014</Address>
           <Offsets>
@@ -302,6 +307,7 @@ mov eax,[ecx+50]
         <CheatEntry>
           <ID>13</ID>
           <Description>"Bug Spray"</Description>
+          <LastState Value="1007" RealAddress="0D0BAB84"/>
           <VariableType>4 Bytes</VariableType>
           <Address>"popcapgame1.exe"+00072574</Address>
           <Offsets>
@@ -315,6 +321,7 @@ mov eax,[ecx+50]
         <CheatEntry>
           <ID>69</ID>
           <Description>"Chocolate"</Description>
+          <LastState Value="1045" RealAddress="0D0BABB0"/>
           <VariableType>4 Bytes</VariableType>
           <Address>"popcapgame1.exe"+00119014</Address>
           <Offsets>
@@ -341,6 +348,7 @@ mov eax,[ecx+50]
         <CheatEntry>
           <ID>66</ID>
           <Description>"Vasebreaker Streak"</Description>
+          <LastState Value="0" RealAddress="1494A58C"/>
           <Color>000000</Color>
           <VariableType>4 Bytes</VariableType>
           <Address>"THREADSTACK0"-0000057C</Address>
@@ -354,6 +362,7 @@ mov eax,[ecx+50]
         <CheatEntry>
           <ID>72</ID>
           <Description>"Giant Tree Height"</Description>
+          <LastState Value="502" RealAddress="0D0BAA7C"/>
           <VariableType>4 Bytes</VariableType>
           <Address>"popcapgame1.exe"+00119014</Address>
           <Offsets>
@@ -439,6 +448,7 @@ dealloc(newmem)
             <CheatEntry>
               <ID>98</ID>
               <Description>"EDI_"</Description>
+              <LastState Value="0" RealAddress="00960000"/>
               <ShowAsSigned>0</ShowAsSigned>
               <VariableType>4 Bytes</VariableType>
               <Address>EDI_</Address>
@@ -495,7 +505,7 @@ dealloc(newmem)
             </CheatEntry>
             <CheatEntry>
               <ID>107</ID>
-              <Description>"EDI_28"</Description>
+              <Description>"EDI_28 (Plant Cooldown)"</Description>
               <ShowAsSigned>0</ShowAsSigned>
               <VariableType>4 Bytes</VariableType>
               <Address>EDI_</Address>
@@ -508,7 +518,7 @@ dealloc(newmem)
         <CheatEntry>
           <ID>119</ID>
           <Description>"Plants"</Description>
-          <LastState Activated="1"/>
+          <LastState/>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>[ENABLE]
 //code from here to '[DISABLE]' will be used to enable the cheat
@@ -530,6 +540,7 @@ dealloc(SelectedPlantsBase)
             <CheatEntry>
               <ID>108</ID>
               <Description>"Base (Put 1st Plant ID Address Here As Decimal)"</Description>
+              <LastState Value="0" RealAddress="00970000"/>
               <ShowAsSigned>0</ShowAsSigned>
               <VariableType>4 Bytes</VariableType>
               <Address>SelectedPlantsBase</Address>
@@ -1627,7 +1638,7 @@ dealloc(SelectedPlantsBase)
         <Byte>58</Byte>
       </After>
     </CodeEntry>
-    <CodeEntry Color="80000008">
+    <CodeEntry Color="20000000">
       <Description>Survival Endless Number Of Special Plants Money Multiplyer:add [edi+4C],eax</Description>
       <AddressString>popcapgame1.exe+93B6E</AddressString>
       <Before>
@@ -1650,7 +1661,7 @@ dealloc(SelectedPlantsBase)
         <Byte>C1</Byte>
       </After>
     </CodeEntry>
-    <CodeEntry Color="80000008">
+    <CodeEntry Color="20000000">
       <Description>Acesses plant placed count on game end:movzx eax,byte ptr [edx]</Description>
       <AddressString>popcapgame1.exe+236929</AddressString>
       <Before>
@@ -1671,6 +1682,52 @@ dealloc(SelectedPlantsBase)
         <Byte>4D</Byte>
         <Byte>F8</Byte>
         <Byte>E8</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="80000008">
+      <Description>Plant Put In Wheel Barrow :mov [esi+08],eax</Description>
+      <AddressString>popcapgame1.exe+12BB9C</AddressString>
+      <Before>
+        <Byte>04</Byte>
+        <Byte>02</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Before>
+      <Actual>
+        <Byte>89</Byte>
+        <Byte>46</Byte>
+        <Byte>08</Byte>
+      </Actual>
+      <After>
+        <Byte>89</Byte>
+        <Byte>46</Byte>
+        <Byte>0C</Byte>
+        <Byte>8B</Byte>
+        <Byte>3F</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="80000008">
+      <Description>Plant Removed From Wheel Barrow :mov [esi+08],edi</Description>
+      <AddressString>popcapgame1.exe+12BB19</AddressString>
+      <Before>
+        <Byte>46</Byte>
+        <Byte>04</Byte>
+        <Byte>89</Byte>
+        <Byte>4E</Byte>
+        <Byte>0C</Byte>
+      </Before>
+      <Actual>
+        <Byte>89</Byte>
+        <Byte>7E</Byte>
+        <Byte>08</Byte>
+      </Actual>
+      <After>
+        <Byte>8B</Byte>
+        <Byte>55</Byte>
+        <Byte>00</Byte>
+        <Byte>8B</Byte>
+        <Byte>CE</Byte>
       </After>
     </CodeEntry>
   </CheatCodes>
