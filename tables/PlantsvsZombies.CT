@@ -13,6 +13,10 @@
 alloc(MoneyGainMultiplyer, 4)
 registersymbol(MoneyGainMultiplyer)
 
+alloc(SunGainMultiplyer, 4)
+registersymbol(SunGainMultiplyer)
+
+
 // db for byte
 // dw for 2-byte
 // dd for 4-byte
@@ -20,6 +24,9 @@ registersymbol(MoneyGainMultiplyer)
 // dq for 8-byte
 // dq for double
 MoneyGainMultiplyer:
+  dd #1
+
+SunGainMultiplyer:
   dd #1
 
 {$lua}
@@ -36,13 +43,16 @@ getAddressList().Control[1].OnSectionClick = nil
 
 unregistersymbol(MoneyGainMultiplyer)
 dealloc(MoneyGainMultiplyer)
+
+unregistersymbol(SunGainMultiplyer)
+dealloc(SunGainMultiplyer)
 </AssemblerScript>
       <CheatEntries>
         <CheatEntry>
           <ID>78</ID>
           <Description>"Money Gain Multiplyer"</Description>
           <Options moHideChildren="1"/>
-          <LastState/>
+          <LastState Activated="1"/>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>[ENABLE]
 //code from here to '[DISABLE]' will be used to enable the cheat
@@ -80,6 +90,49 @@ dealloc(newmem)
               <ShowAsSigned>0</ShowAsSigned>
               <VariableType>4 Bytes</VariableType>
               <Address>MoneyGainMultiplyer</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>89</ID>
+          <Description>"Sun Gain Multiplyer"</Description>
+          <Options moHideChildren="1"/>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+
+newmem: //this is allocated memory, you have read,write,execute access
+  imul ecx, [SunGainMultiplyer]
+  add [eax+00005578],ecx
+  jmp returnhere
+
+
+"popcapgame1.exe"+1E6E0:
+  jmp newmem
+  nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+
+"popcapgame1.exe"+1E6E0:
+  add [eax+00005578],ecx
+// Alt: db 01 88 78 55 00 00
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>90</ID>
+              <Description>"Multiplyer"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>SunGainMultiplyer</Address>
             </CheatEntry>
           </CheatEntries>
         </CheatEntry>
@@ -148,7 +201,7 @@ mov [edi+00005578],esi
         <CheatEntry>
           <ID>20</ID>
           <Description>"No Money Usage"</Description>
-          <LastState/>
+          <LastState Activated="1"/>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>[ENABLE]
 //code from here to '[DISABLE]' will be used to enable the cheat
@@ -206,7 +259,7 @@ mov eax,[ecx+50]
       <ID>81</ID>
       <Description>"Static Pointers"</Description>
       <Options moHideChildren="1"/>
-      <LastState Value="" Activated="1" RealAddress="00000000"/>
+      <LastState Value="" RealAddress="00000000"/>
       <GroupHeader>1</GroupHeader>
       <CheatEntries>
         <CheatEntry>
@@ -307,6 +360,811 @@ mov eax,[ecx+50]
             <Offset>154</Offset>
             <Offset>4A4</Offset>
           </Offsets>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>99</ID>
+      <Description>"Alloc Address"</Description>
+      <Options moHideChildren="1"/>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+
+
+alloc(EDI_, 4)
+registersymbol(EDI_)
+
+EDI_:
+  dd 0
+
+
+alloc(EDI_04, 4)
+registersymbol(EDI_04)
+
+EDI_04:
+  dd 0
+
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+
+
+
+dealloc(EDI_, 4)
+unregistersymbol(EDI_)
+
+dealloc(EDI_04, 4)
+unregistersymbol(EDI_04)
+
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>97</ID>
+          <Description>"Inject Hook"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+
+newmem:
+  mov [EDI_], edi
+  mov esi,[edi+04]
+  mov [EDI_04], esi
+  mov eax,esi
+
+  jmp returnhere
+
+"popcapgame1.exe"+93AF5:
+  jmp newmem
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+
+
+"popcapgame1.exe"+93AF5:
+  mov esi,[edi+04]
+  mov eax,esi
+// Alt: db 8B 77 04 8B C6
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>98</ID>
+              <Description>"EDI_"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>EDI_</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>102</ID>
+              <Description>"EDI_04"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>EDI_</Address>
+              <Offsets>
+                <Offset>4</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>103</ID>
+              <Description>"EDI_34 (Plant ID)"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>EDI_</Address>
+              <Offsets>
+                <Offset>34</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>104</ID>
+              <Description>"EDI_38"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>EDI_</Address>
+              <Offsets>
+                <Offset>38</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>105</ID>
+              <Description>"EDI_4C (Number of plant placed)"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>EDI_</Address>
+              <Offsets>
+                <Offset>4c</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>106</ID>
+              <Description>"EDI_49"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>EDI_</Address>
+              <Offsets>
+                <Offset>49</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>107</ID>
+              <Description>"EDI_28"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>EDI_</Address>
+              <Offsets>
+                <Offset>28</Offset>
+              </Offsets>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>119</ID>
+          <Description>"Plants"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+
+alloc(SelectedPlantsBase, 4)
+registersymbol(SelectedPlantsBase)
+
+SelectedPlantsBase:
+ dd #0
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+
+unregistersymbol(SelectedPlantsBase)
+
+dealloc(SelectedPlantsBase)
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>108</ID>
+              <Description>"Base (Put 1st Plant ID Address Here As Decimal)"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>SelectedPlantsBase</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>120</ID>
+              <Description>"Slot 1"</Description>
+              <DropDownList DisplayValueAsItem="1">1:Sunflower
+2:Cherry Bomb
+3:Wall-nut
+4:Potato Mine
+5:Snow Pea
+6:Chomper
+7:Repeater
+8:Puff-shroom
+9:Sun-shroom
+10:Fume-shroom
+11:Grave Buster
+12:Hypno-shroom
+13:Scaredy-shroom
+14:Ice-shroom
+15:Doom-shroom
+16:Lily Pad
+17:Squash
+18:Threepeater
+19:Tangle Kelp
+20:Jalapeno
+21:Spikeweed
+22:Torchwood
+23:Tall-nut
+24:Sea-shroom
+25:Plantern
+26:Cactus
+27:Blover
+28:Split Pea
+29:Star Fruit
+30:Pumpkin
+31:Magnet-shroom
+32:Cabbage-pult
+33:Flower Pot
+34:Kernel-pult
+35:Coffee Bean
+36:Garlic
+37:Umbrella Leaf
+38:Marigold
+39:Melon-pult
+40:Gatling Pea
+41:Twin Sunflower
+42:Gloom-shroom
+43:Cattail
+44:Winter Melon
+45:Gold Magnet
+46:Spikerock
+47:Cob Cannon
+48:Imitater
+49:Explode-o-nut
+50:Giant Wall-nut
+51:Sprout
+52:Backwards Repeater
+</DropDownList>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>SelectedPlantsBase</Address>
+              <Offsets>
+                <Offset>0</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>109</ID>
+              <Description>"Slot 2"</Description>
+              <DropDownList DisplayValueAsItem="1">1:Sunflower
+2:Cherry Bomb
+3:Wall-nut
+4:Potato Mine
+5:Snow Pea
+6:Chomper
+7:Repeater
+8:Puff-shroom
+9:Sun-shroom
+10:Fume-shroom
+11:Grave Buster
+12:Hypno-shroom
+13:Scaredy-shroom
+14:Ice-shroom
+15:Doom-shroom
+16:Lily Pad
+17:Squash
+18:Threepeater
+19:Tangle Kelp
+20:Jalapeno
+21:Spikeweed
+22:Torchwood
+23:Tall-nut
+24:Sea-shroom
+25:Plantern
+26:Cactus
+27:Blover
+28:Split Pea
+29:Star Fruit
+30:Pumpkin
+31:Magnet-shroom
+32:Cabbage-pult
+33:Flower Pot
+34:Kernel-pult
+35:Coffee Bean
+36:Garlic
+37:Umbrella Leaf
+38:Marigold
+39:Melon-pult
+40:Gatling Pea
+41:Twin Sunflower
+42:Gloom-shroom
+43:Cattail
+44:Winter Melon
+45:Gold Magnet
+46:Spikerock
+47:Cob Cannon
+48:Imitater
+49:Explode-o-nut
+50:Giant Wall-nut
+51:Sprout
+52:Backwards Repeater
+</DropDownList>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>SelectedPlantsBase</Address>
+              <Offsets>
+                <Offset>50</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>110</ID>
+              <Description>"Slot 3"</Description>
+              <DropDownList DisplayValueAsItem="1">1:Sunflower
+2:Cherry Bomb
+3:Wall-nut
+4:Potato Mine
+5:Snow Pea
+6:Chomper
+7:Repeater
+8:Puff-shroom
+9:Sun-shroom
+10:Fume-shroom
+11:Grave Buster
+12:Hypno-shroom
+13:Scaredy-shroom
+14:Ice-shroom
+15:Doom-shroom
+16:Lily Pad
+17:Squash
+18:Threepeater
+19:Tangle Kelp
+20:Jalapeno
+21:Spikeweed
+22:Torchwood
+23:Tall-nut
+24:Sea-shroom
+25:Plantern
+26:Cactus
+27:Blover
+28:Split Pea
+29:Star Fruit
+30:Pumpkin
+31:Magnet-shroom
+32:Cabbage-pult
+33:Flower Pot
+34:Kernel-pult
+35:Coffee Bean
+36:Garlic
+37:Umbrella Leaf
+38:Marigold
+39:Melon-pult
+40:Gatling Pea
+41:Twin Sunflower
+42:Gloom-shroom
+43:Cattail
+44:Winter Melon
+45:Gold Magnet
+46:Spikerock
+47:Cob Cannon
+48:Imitater
+49:Explode-o-nut
+50:Giant Wall-nut
+51:Sprout
+52:Backwards Repeater
+</DropDownList>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>SelectedPlantsBase</Address>
+              <Offsets>
+                <Offset>a0</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>111</ID>
+              <Description>"Slot 4"</Description>
+              <DropDownList DisplayValueAsItem="1">1:Sunflower
+2:Cherry Bomb
+3:Wall-nut
+4:Potato Mine
+5:Snow Pea
+6:Chomper
+7:Repeater
+8:Puff-shroom
+9:Sun-shroom
+10:Fume-shroom
+11:Grave Buster
+12:Hypno-shroom
+13:Scaredy-shroom
+14:Ice-shroom
+15:Doom-shroom
+16:Lily Pad
+17:Squash
+18:Threepeater
+19:Tangle Kelp
+20:Jalapeno
+21:Spikeweed
+22:Torchwood
+23:Tall-nut
+24:Sea-shroom
+25:Plantern
+26:Cactus
+27:Blover
+28:Split Pea
+29:Star Fruit
+30:Pumpkin
+31:Magnet-shroom
+32:Cabbage-pult
+33:Flower Pot
+34:Kernel-pult
+35:Coffee Bean
+36:Garlic
+37:Umbrella Leaf
+38:Marigold
+39:Melon-pult
+40:Gatling Pea
+41:Twin Sunflower
+42:Gloom-shroom
+43:Cattail
+44:Winter Melon
+45:Gold Magnet
+46:Spikerock
+47:Cob Cannon
+48:Imitater
+49:Explode-o-nut
+50:Giant Wall-nut
+51:Sprout
+52:Backwards Repeater
+</DropDownList>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>SelectedPlantsBase</Address>
+              <Offsets>
+                <Offset>f0</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>113</ID>
+              <Description>"Slot 5"</Description>
+              <DropDownList DisplayValueAsItem="1">1:Sunflower
+2:Cherry Bomb
+3:Wall-nut
+4:Potato Mine
+5:Snow Pea
+6:Chomper
+7:Repeater
+8:Puff-shroom
+9:Sun-shroom
+10:Fume-shroom
+11:Grave Buster
+12:Hypno-shroom
+13:Scaredy-shroom
+14:Ice-shroom
+15:Doom-shroom
+16:Lily Pad
+17:Squash
+18:Threepeater
+19:Tangle Kelp
+20:Jalapeno
+21:Spikeweed
+22:Torchwood
+23:Tall-nut
+24:Sea-shroom
+25:Plantern
+26:Cactus
+27:Blover
+28:Split Pea
+29:Star Fruit
+30:Pumpkin
+31:Magnet-shroom
+32:Cabbage-pult
+33:Flower Pot
+34:Kernel-pult
+35:Coffee Bean
+36:Garlic
+37:Umbrella Leaf
+38:Marigold
+39:Melon-pult
+40:Gatling Pea
+41:Twin Sunflower
+42:Gloom-shroom
+43:Cattail
+44:Winter Melon
+45:Gold Magnet
+46:Spikerock
+47:Cob Cannon
+48:Imitater
+49:Explode-o-nut
+50:Giant Wall-nut
+51:Sprout
+52:Backwards Repeater
+</DropDownList>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>SelectedPlantsBase</Address>
+              <Offsets>
+                <Offset>140</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>114</ID>
+              <Description>"Slot 6"</Description>
+              <DropDownList DisplayValueAsItem="1">1:Sunflower
+2:Cherry Bomb
+3:Wall-nut
+4:Potato Mine
+5:Snow Pea
+6:Chomper
+7:Repeater
+8:Puff-shroom
+9:Sun-shroom
+10:Fume-shroom
+11:Grave Buster
+12:Hypno-shroom
+13:Scaredy-shroom
+14:Ice-shroom
+15:Doom-shroom
+16:Lily Pad
+17:Squash
+18:Threepeater
+19:Tangle Kelp
+20:Jalapeno
+21:Spikeweed
+22:Torchwood
+23:Tall-nut
+24:Sea-shroom
+25:Plantern
+26:Cactus
+27:Blover
+28:Split Pea
+29:Star Fruit
+30:Pumpkin
+31:Magnet-shroom
+32:Cabbage-pult
+33:Flower Pot
+34:Kernel-pult
+35:Coffee Bean
+36:Garlic
+37:Umbrella Leaf
+38:Marigold
+39:Melon-pult
+40:Gatling Pea
+41:Twin Sunflower
+42:Gloom-shroom
+43:Cattail
+44:Winter Melon
+45:Gold Magnet
+46:Spikerock
+47:Cob Cannon
+48:Imitater
+49:Explode-o-nut
+50:Giant Wall-nut
+51:Sprout
+52:Backwards Repeater
+</DropDownList>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>SelectedPlantsBase</Address>
+              <Offsets>
+                <Offset>190</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>115</ID>
+              <Description>"Slot 7"</Description>
+              <DropDownList DisplayValueAsItem="1">1:Sunflower
+2:Cherry Bomb
+3:Wall-nut
+4:Potato Mine
+5:Snow Pea
+6:Chomper
+7:Repeater
+8:Puff-shroom
+9:Sun-shroom
+10:Fume-shroom
+11:Grave Buster
+12:Hypno-shroom
+13:Scaredy-shroom
+14:Ice-shroom
+15:Doom-shroom
+16:Lily Pad
+17:Squash
+18:Threepeater
+19:Tangle Kelp
+20:Jalapeno
+21:Spikeweed
+22:Torchwood
+23:Tall-nut
+24:Sea-shroom
+25:Plantern
+26:Cactus
+27:Blover
+28:Split Pea
+29:Star Fruit
+30:Pumpkin
+31:Magnet-shroom
+32:Cabbage-pult
+33:Flower Pot
+34:Kernel-pult
+35:Coffee Bean
+36:Garlic
+37:Umbrella Leaf
+38:Marigold
+39:Melon-pult
+40:Gatling Pea
+41:Twin Sunflower
+42:Gloom-shroom
+43:Cattail
+44:Winter Melon
+45:Gold Magnet
+46:Spikerock
+47:Cob Cannon
+48:Imitater
+49:Explode-o-nut
+50:Giant Wall-nut
+51:Sprout
+52:Backwards Repeater
+</DropDownList>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>SelectedPlantsBase</Address>
+              <Offsets>
+                <Offset>1e0</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116</ID>
+              <Description>"Slot 8"</Description>
+              <DropDownList DisplayValueAsItem="1">1:Sunflower
+2:Cherry Bomb
+3:Wall-nut
+4:Potato Mine
+5:Snow Pea
+6:Chomper
+7:Repeater
+8:Puff-shroom
+9:Sun-shroom
+10:Fume-shroom
+11:Grave Buster
+12:Hypno-shroom
+13:Scaredy-shroom
+14:Ice-shroom
+15:Doom-shroom
+16:Lily Pad
+17:Squash
+18:Threepeater
+19:Tangle Kelp
+20:Jalapeno
+21:Spikeweed
+22:Torchwood
+23:Tall-nut
+24:Sea-shroom
+25:Plantern
+26:Cactus
+27:Blover
+28:Split Pea
+29:Star Fruit
+30:Pumpkin
+31:Magnet-shroom
+32:Cabbage-pult
+33:Flower Pot
+34:Kernel-pult
+35:Coffee Bean
+36:Garlic
+37:Umbrella Leaf
+38:Marigold
+39:Melon-pult
+40:Gatling Pea
+41:Twin Sunflower
+42:Gloom-shroom
+43:Cattail
+44:Winter Melon
+45:Gold Magnet
+46:Spikerock
+47:Cob Cannon
+48:Imitater
+49:Explode-o-nut
+50:Giant Wall-nut
+51:Sprout
+52:Backwards Repeater
+</DropDownList>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>SelectedPlantsBase</Address>
+              <Offsets>
+                <Offset>230</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>117</ID>
+              <Description>"Slot 9"</Description>
+              <DropDownList DisplayValueAsItem="1">1:Sunflower
+2:Cherry Bomb
+3:Wall-nut
+4:Potato Mine
+5:Snow Pea
+6:Chomper
+7:Repeater
+8:Puff-shroom
+9:Sun-shroom
+10:Fume-shroom
+11:Grave Buster
+12:Hypno-shroom
+13:Scaredy-shroom
+14:Ice-shroom
+15:Doom-shroom
+16:Lily Pad
+17:Squash
+18:Threepeater
+19:Tangle Kelp
+20:Jalapeno
+21:Spikeweed
+22:Torchwood
+23:Tall-nut
+24:Sea-shroom
+25:Plantern
+26:Cactus
+27:Blover
+28:Split Pea
+29:Star Fruit
+30:Pumpkin
+31:Magnet-shroom
+32:Cabbage-pult
+33:Flower Pot
+34:Kernel-pult
+35:Coffee Bean
+36:Garlic
+37:Umbrella Leaf
+38:Marigold
+39:Melon-pult
+40:Gatling Pea
+41:Twin Sunflower
+42:Gloom-shroom
+43:Cattail
+44:Winter Melon
+45:Gold Magnet
+46:Spikerock
+47:Cob Cannon
+48:Imitater
+49:Explode-o-nut
+50:Giant Wall-nut
+51:Sprout
+52:Backwards Repeater
+</DropDownList>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>SelectedPlantsBase</Address>
+              <Offsets>
+                <Offset>280</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>118</ID>
+              <Description>"Slot 10"</Description>
+              <DropDownList DisplayValueAsItem="1">1:Sunflower
+2:Cherry Bomb
+3:Wall-nut
+4:Potato Mine
+5:Snow Pea
+6:Chomper
+7:Repeater
+8:Puff-shroom
+9:Sun-shroom
+10:Fume-shroom
+11:Grave Buster
+12:Hypno-shroom
+13:Scaredy-shroom
+14:Ice-shroom
+15:Doom-shroom
+16:Lily Pad
+17:Squash
+18:Threepeater
+19:Tangle Kelp
+20:Jalapeno
+21:Spikeweed
+22:Torchwood
+23:Tall-nut
+24:Sea-shroom
+25:Plantern
+26:Cactus
+27:Blover
+28:Split Pea
+29:Star Fruit
+30:Pumpkin
+31:Magnet-shroom
+32:Cabbage-pult
+33:Flower Pot
+34:Kernel-pult
+35:Coffee Bean
+36:Garlic
+37:Umbrella Leaf
+38:Marigold
+39:Melon-pult
+40:Gatling Pea
+41:Twin Sunflower
+42:Gloom-shroom
+43:Cattail
+44:Winter Melon
+45:Gold Magnet
+46:Spikerock
+47:Cob Cannon
+48:Imitater
+49:Explode-o-nut
+50:Giant Wall-nut
+51:Sprout
+52:Backwards Repeater
+</DropDownList>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>SelectedPlantsBase</Address>
+              <Offsets>
+                <Offset>2d0</Offset>
+              </Offsets>
+            </CheatEntry>
+          </CheatEntries>
         </CheatEntry>
       </CheatEntries>
     </CheatEntry>
@@ -433,7 +1291,7 @@ mov eax,[ecx+50]
         <Byte>FF</Byte>
       </After>
     </CodeEntry>
-    <CodeEntry Color="80000008">
+    <CodeEntry Color="20000000">
       <Description>Pickup Plant In Zen Garden:mov [edx+38],eax</Description>
       <AddressString>popcapgame1.exe+129FB6</AddressString>
       <Before>
@@ -456,7 +1314,7 @@ mov eax,[ecx+50]
         <Byte>A1</Byte>
       </After>
     </CodeEntry>
-    <CodeEntry Color="80000008">
+    <CodeEntry Color="20000000">
       <Description>Put Down Plant In Zen Garden :mov [edx+38],ebx</Description>
       <AddressString>popcapgame1.exe+14D80</AddressString>
       <Before>
@@ -479,7 +1337,7 @@ mov eax,[ecx+50]
         <Byte>00</Byte>
       </After>
     </CodeEntry>
-    <CodeEntry Color="80000008">
+    <CodeEntry Color="20000000">
       <Description>Plant Cooldown Timer Change:inc [edi+24]</Description>
       <AddressString>popcapgame1.exe+91E4C</AddressString>
       <Before>
@@ -502,7 +1360,7 @@ mov eax,[ecx+50]
         <Byte>47</Byte>
       </After>
     </CodeEntry>
-    <CodeEntry Color="80000008">
+    <CodeEntry Color="20000000">
       <Description>Change of jle popcapgame1.exe+91E6B</Description>
       <AddressString>popcapgame1.exe+91E55</AddressString>
       <Before>
@@ -524,7 +1382,7 @@ mov eax,[ecx+50]
         <Byte>00</Byte>
       </After>
     </CodeEntry>
-    <CodeEntry Color="80000008">
+    <CodeEntry Color="20000000">
       <Description>Fog Timer:mov [esi+000005EC],eax</Description>
       <AddressString>popcapgame1.exe+1844F</AddressString>
       <Before>
@@ -550,7 +1408,7 @@ mov eax,[ecx+50]
         <Byte>00</Byte>
       </After>
     </CodeEntry>
-    <CodeEntry Color="80000008">
+    <CodeEntry Color="20000000">
       <Description>Check if level has fog :cmp dword ptr [ebp+00005564],03</Description>
       <AddressString>popcapgame1.exe+D6DA</AddressString>
       <Before>
@@ -577,7 +1435,7 @@ mov eax,[ecx+50]
         <Byte>EC</Byte>
       </After>
     </CodeEntry>
-    <CodeEntry Color="80000008">
+    <CodeEntry Color="20000000">
       <Description>Change of mov [edx],al</Description>
       <AddressString>popcapgame1.exe+236EE1</AddressString>
       <Before>
@@ -599,7 +1457,7 @@ mov eax,[ecx+50]
         <Byte>5D</Byte>
       </After>
     </CodeEntry>
-    <CodeEntry Color="80000008">
+    <CodeEntry Color="20000000">
       <Description>Change of dec [eax+000005EC]</Description>
       <AddressString>popcapgame1.exe+3F15B</AddressString>
       <Before>
@@ -625,7 +1483,7 @@ mov eax,[ecx+50]
         <Byte>B8</Byte>
       </After>
     </CodeEntry>
-    <CodeEntry Color="80000008">
+    <CodeEntry Color="20000000">
       <Description>Change of mov [esi+000005EC],eax</Description>
       <AddressString>popcapgame1.exe+1844F</AddressString>
       <Before>
@@ -651,6 +1509,170 @@ mov eax,[ecx+50]
         <Byte>00</Byte>
       </After>
     </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>Is Left Click Down:mov [esi+19],bl</Description>
+      <AddressString>popcapgame1.exe+4AFB6</AddressString>
+      <Before>
+        <Byte>21</Byte>
+        <Byte>80</Byte>
+        <Byte>7E</Byte>
+        <Byte>18</Byte>
+        <Byte>00</Byte>
+      </Before>
+      <Actual>
+        <Byte>88</Byte>
+        <Byte>5E</Byte>
+        <Byte>19</Byte>
+      </Actual>
+      <After>
+        <Byte>74</Byte>
+        <Byte>08</Byte>
+        <Byte>88</Byte>
+        <Byte>9E</Byte>
+        <Byte>00</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>Hold Item On Mouse:mov [ecx+30],ebx</Description>
+      <AddressString>popcapgame1.exe+93A35</AddressString>
+      <Before>
+        <Byte>BB</Byte>
+        <Byte>01</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Before>
+      <Actual>
+        <Byte>89</Byte>
+        <Byte>59</Byte>
+        <Byte>30</Byte>
+      </Actual>
+      <After>
+        <Byte>8B</Byte>
+        <Byte>55</Byte>
+        <Byte>04</Byte>
+        <Byte>8B</Byte>
+        <Byte>82</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>Let Go Of Item On Mouse :mov [edx+30],ebx</Description>
+      <AddressString>popcapgame1.exe+14D53</AddressString>
+      <Before>
+        <Byte>97</Byte>
+        <Byte>50</Byte>
+        <Byte>01</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Before>
+      <Actual>
+        <Byte>89</Byte>
+        <Byte>5A</Byte>
+        <Byte>30</Byte>
+      </Actual>
+      <After>
+        <Byte>8B</Byte>
+        <Byte>8F</Byte>
+        <Byte>50</Byte>
+        <Byte>01</Byte>
+        <Byte>00</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>Is Holding Shovel:mov [ecx+30],00000006</Description>
+      <AddressString>popcapgame1.exe+14637</AddressString>
+      <Before>
+        <Byte>8B</Byte>
+        <Byte>50</Byte>
+        <Byte>01</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Before>
+      <Actual>
+        <Byte>C7</Byte>
+        <Byte>41</Byte>
+        <Byte>30</Byte>
+        <Byte>06</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>8B</Byte>
+        <Byte>83</Byte>
+        <Byte>A4</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>Put Plant In Wheel Barrow:mov [ecx],edx</Description>
+      <AddressString>popcapgame1.exe+483B9</AddressString>
+      <Before>
+        <Byte>8B</Byte>
+        <Byte>10</Byte>
+        <Byte>FF</Byte>
+        <Byte>48</Byte>
+        <Byte>0C</Byte>
+      </Before>
+      <Actual>
+        <Byte>89</Byte>
+        <Byte>11</Byte>
+      </Actual>
+      <After>
+        <Byte>89</Byte>
+        <Byte>08</Byte>
+        <Byte>89</Byte>
+        <Byte>5E</Byte>
+        <Byte>58</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="80000008">
+      <Description>Survival Endless Number Of Special Plants Money Multiplyer:add [edi+4C],eax</Description>
+      <AddressString>popcapgame1.exe+93B6E</AddressString>
+      <Before>
+        <Byte>B8</Byte>
+        <Byte>01</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Before>
+      <Actual>
+        <Byte>01</Byte>
+        <Byte>47</Byte>
+        <Byte>4C</Byte>
+      </Actual>
+      <After>
+        <Byte>88</Byte>
+        <Byte>47</Byte>
+        <Byte>49</Byte>
+        <Byte>8B</Byte>
+        <Byte>C1</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="80000008">
+      <Description>Acesses plant placed count on game end:movzx eax,byte ptr [edx]</Description>
+      <AddressString>popcapgame1.exe+236929</AddressString>
+      <Before>
+        <Byte>55</Byte>
+        <Byte>08</Byte>
+        <Byte>03</Byte>
+        <Byte>55</Byte>
+        <Byte>FC</Byte>
+      </Before>
+      <Actual>
+        <Byte>0F</Byte>
+        <Byte>B6</Byte>
+        <Byte>02</Byte>
+      </Actual>
+      <After>
+        <Byte>50</Byte>
+        <Byte>8B</Byte>
+        <Byte>4D</Byte>
+        <Byte>F8</Byte>
+        <Byte>E8</Byte>
+      </After>
+    </CodeEntry>
   </CheatCodes>
   <UserdefinedSymbols/>
   <DisassemblerComments>
@@ -665,6 +1687,20 @@ mov eax,[ecx+50]
 </Comment>
     </DisassemblerComment>
     <DisassemblerComment>
+      <Address>"popcapgame1.exe"+13495</Address>
+      <Comment>Place a plant function??
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"popcapgame1.exe"+14637</Address>
+      <Comment>Begin Holding Shovel
+ecx+30 is mouse item hold state
+0 = nothing
+1 = plant 
+6 = shovel
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
       <Address>"popcapgame1.exe"+1844E</Address>
       <Comment>Decrement Fog Timer
 </Comment>
@@ -672,6 +1708,57 @@ mov eax,[ecx+50]
     <DisassemblerComment>
       <Address>"popcapgame1.exe"+1844F</Address>
       <Comment>Update Fog Timer
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"popcapgame1.exe"+4AFB6</Address>
+      <Comment>Set mouse is left clicking to 256 
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"popcapgame1.exe"+93AF0</Address>
+      <Comment>Place plant function start
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"popcapgame1.exe"+93B63</Address>
+      <Comment>Probably the plant id / number
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"popcapgame1.exe"+93B66</Address>
+      <Comment>Get some weird constant
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"popcapgame1.exe"+93B6E</Address>
+      <Comment>Increase the plant placement count by 1
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"popcapgame1.exe"+93B71</Address>
+      <Comment>Some big number (pointer?)
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"popcapgame1.exe"+93B76</Address>
+      <Comment>Some check that makes al have a value of 1
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"popcapgame1.exe"+93B7D</Address>
+      <Comment>Skip this if al is 1
+All this stuff is almost never called
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"popcapgame1.exe"+93B8B</Address>
+      <Comment>If ecx is not 48
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"popcapgame1.exe"+93B90</Address>
+      <Comment>If edx is 255
 </Comment>
     </DisassemblerComment>
     <DisassemblerComment>
