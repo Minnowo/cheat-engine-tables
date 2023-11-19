@@ -87,7 +87,7 @@ dealloc(newmem)
             <CheatEntry>
               <ID>79</ID>
               <Description>"Multiplyer"</Description>
-              <LastState Value="1" RealAddress="09730000"/>
+              <LastState Value="1" RealAddress="00900000"/>
               <ShowAsSigned>0</ShowAsSigned>
               <VariableType>4 Bytes</VariableType>
               <Address>MoneyGainMultiplyer</Address>
@@ -131,7 +131,7 @@ dealloc(newmem)
             <CheatEntry>
               <ID>90</ID>
               <Description>"Multiplyer"</Description>
-              <LastState Value="1" RealAddress="09730004"/>
+              <LastState Value="1" RealAddress="00900004"/>
               <ShowAsSigned>0</ShowAsSigned>
               <VariableType>4 Bytes</VariableType>
               <Address>SunGainMultiplyer</Address>
@@ -259,7 +259,7 @@ mov eax,[ecx+50]
           <ID>131</ID>
           <Description>"Change Bullets"</Description>
           <Options moHideChildren="1"/>
-          <LastState Activated="1"/>
+          <LastState/>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>[ENABLE]
 
@@ -311,8 +311,8 @@ db 89 45 5C 8B C6
           <CheatEntries>
             <CheatEntry>
               <ID>132</ID>
-              <Description>"Bullet Type"</Description>
-              <DropDownList>0:Pea
+              <Description>"Bullet Type (0 - 13)"</Description>
+              <DropDownList DisplayValueAsItem="1">0:Pea
 1:Frost Pea
 2:Cabbage
 3:Melon
@@ -327,28 +327,313 @@ db 89 45 5C 8B C6
 12:Butter
 13:Nothing
 </DropDownList>
-              <LastState Value="11" RealAddress="009C0800"/>
               <ShowAsSigned>0</ShowAsSigned>
               <VariableType>4 Bytes</VariableType>
               <Address>bullet_type</Address>
             </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>142</ID>
+          <Description>"Hand Plant Finder"</Description>
+          <Options moHideChildren="1"/>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+
+alloc(plant_to_pickup,4)
+registersymbol(plant_to_pickup)
+
+alloc(plant_picked_up,8)
+registersymbol(plant_picked_up)
+
+label(returnhere)
+label(originalcode)
+
+plant_to_pickup:
+  dd 00
+
+plant_picked_up:
+  dd 00
+
+originalcode:
+  mov [plant_picked_up], ecx
+  // mov edx, [plant_to_pickup] // to force set hand to this plant
+  mov [ecx+28],edx
+  mov eax,[ebp+04]
+
+  jmp returnhere
+
+"popcapgame1.exe"+93A15:
+jmp originalcode
+nop
+returnhere:
+
+
+
+ 
+ 
+[DISABLE]
+
+unregistersymbol(plant_to_pickup)
+dealloc(plant_to_pickup)
+
+unregistersymbol(plant_to_pickup)
+dealloc(plant_to_pickup)
+
+"popcapgame1.exe"+93A15:
+db 89 51 28 8B 45 04
+//mov [ecx+28],edx
+//mov eax,[ebp+04]
+</AssemblerScript>
+          <CheatEntries>
             <CheatEntry>
-              <ID>133</ID>
-              <Description>"Plant_Ptr"</Description>
-              <LastState Value="357245568" RealAddress="009C0804"/>
+              <ID>145</ID>
+              <Description>"Current Hand Base"</Description>
               <ShowAsSigned>0</ShowAsSigned>
               <VariableType>4 Bytes</VariableType>
-              <Address>plant_ptr</Address>
-            </CheatEntry>
-            <CheatEntry>
-              <ID>135</ID>
-              <Description>"Plant_Ptr As Ptr"</Description>
-              <LastState Value="43425376" RealAddress="154B2280"/>
-              <ShowAsSigned>0</ShowAsSigned>
-              <VariableType>4 Bytes</VariableType>
-              <Address>plant_ptr</Address>
+              <Address>plant_picked_up</Address>
               <Offsets>
                 <Offset>0</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>147</ID>
+              <Description>"Current In Hand Plant ID"</Description>
+              <DropDownList DisplayValueAsItem="1">0:Peashooter
+1:Sunflower
+2:Cherry Bomb
+3:Wall-nut
+4:Potato Mine
+5:Snow Pea
+6:Chomper
+7:Repeater
+8:Puff-Shroom
+9:Sun-Shroom
+10:Fume-Shroom
+11:Grave Buster
+</DropDownList>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>plant_picked_up</Address>
+              <Offsets>
+                <Offset>28</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>143</ID>
+              <Description>"Plant To Place (0 - 52)"</Description>
+              <DropDownList DisplayValueAsItem="1">0:Peashooter
+1:Sunflower
+2:Cherry Bomb
+3:Wall-nut
+4:Potato Mine
+5:Snow Pea
+6:Chomper
+7:Repeater
+8:Puff-Shroom
+9:Sun-Shroom
+10:Fume-Shroom
+11:Grave Buster
+</DropDownList>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>plant_to_pickup</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>149</ID>
+              <Description>"Always Place Plant To Place"</Description>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+
+
+newmem:
+
+originalcode:
+  mov eax, [plant_to_pickup]
+  //mov eax,[eax+28]
+  push edx
+  push eax
+  jmp returnhere
+
+"popcapgame1.exe"+13452:
+  jmp originalcode
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"popcapgame1.exe"+13452:
+db 8B 40 28 52 50
+//mov eax,[eax+28]
+//push edx
+//push eax
+</AssemblerScript>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>152</ID>
+          <Description>"Mouse Over Row Hook"</Description>
+          <Options moHideChildren="1"/>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+
+alloc(mouse_over_base, 4)
+registersymbol(mouse_over_base)
+
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+
+mouse_over_base:
+  dd 00
+
+newmem:
+
+originalcode:
+  mov [mouse_over_base], edi
+  mov [edi+28],edx
+  test esi,esi
+  jmp returnhere
+
+"popcapgame1.exe"+3BFF9:
+jmp newmem
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+
+unregistersymbol(mouse_over_base)
+dealloc(mouse_over_base)
+
+dealloc(newmem)
+
+"popcapgame1.exe"+3BFF9:
+db 89 57 28 85 F6
+//mov [edi+28],edx
+//test esi,esi
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>153</ID>
+              <Description>"Mouse Over base"</Description>
+              <LastState Value="40672864" RealAddress="11B818C8"/>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>mouse_over_base</Address>
+              <Offsets>
+                <Offset>0</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>154</ID>
+              <Description>"Mouse Over Col"</Description>
+              <LastState Value="4294967295" RealAddress="11B818EC"/>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>mouse_over_base</Address>
+              <Offsets>
+                <Offset>24</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>160</ID>
+              <Description>"Mouse Over Row"</Description>
+              <LastState Value="4294967295" RealAddress="11B818F0"/>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>mouse_over_base</Address>
+              <Offsets>
+                <Offset>28</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>161</ID>
+              <Description>"Lock Mouse Over Value"</Description>
+              <LastState Value="0" RealAddress="009F0004"/>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>lock_mouse_over_value</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>157</ID>
+          <Description>"Hook Current Held Item"</Description>
+          <Options moHideChildren="1"/>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+
+alloc(newmem,2048)
+
+alloc(held_item_ptr, 4)
+registersymbol(held_item_ptr)
+label(returnhere)
+label(originalcode)
+
+held_item_ptr:
+  dd 00
+
+newmem:
+
+originalcode:
+
+  mov [ecx],esi
+  mov [ecx+04],00000001
+  mov [held_item_ptr], ecx
+  jmp returnhere
+
+"popcapgame1.exe"+11F891:
+jmp newmem
+nop 4
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+
+unregistersymbol(held_item_ptr)
+dealloc(held_item_ptr)
+dealloc(newmem)
+
+"popcapgame1.exe"+11F891:
+db 89 31 C7 41 04 01 00 00 00
+//mov [ecx],esi
+//mov [ecx+04],00000001
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>158</ID>
+              <Description>"No description"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>held_item_ptr</Address>
+              <Offsets>
+                <Offset>0</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>159</ID>
+              <Description>"No description"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>held_item_ptr</Address>
+              <Offsets>
+                <Offset>4</Offset>
               </Offsets>
             </CheatEntry>
           </CheatEntries>
@@ -365,7 +650,6 @@ db 89 45 5C 8B C6
         <CheatEntry>
           <ID>9</ID>
           <Description>"Money"</Description>
-          <LastState Value="0" RealAddress="0853DBE0"/>
           <VariableType>4 Bytes</VariableType>
           <Address>"popcapgame1.exe"+00119014</Address>
           <Offsets>
@@ -378,7 +662,6 @@ db 89 45 5C 8B C6
         <CheatEntry>
           <ID>11</ID>
           <Description>"Fertalizer"</Description>
-          <LastState Value="0" RealAddress="0853DDB0"/>
           <VariableType>4 Bytes</VariableType>
           <Address>"popcapgame1.exe"+00072574</Address>
           <Offsets>
@@ -392,7 +675,6 @@ db 89 45 5C 8B C6
         <CheatEntry>
           <ID>24</ID>
           <Description>"Giant Tree Fertalizer"</Description>
-          <LastState Value="0" RealAddress="0853DDE8"/>
           <VariableType>4 Bytes</VariableType>
           <Address>"popcapgame1.exe"+00119014</Address>
           <Offsets>
@@ -405,7 +687,6 @@ db 89 45 5C 8B C6
         <CheatEntry>
           <ID>13</ID>
           <Description>"Bug Spray"</Description>
-          <LastState Value="0" RealAddress="0853DDB4"/>
           <VariableType>4 Bytes</VariableType>
           <Address>"popcapgame1.exe"+00072574</Address>
           <Offsets>
@@ -419,7 +700,6 @@ db 89 45 5C 8B C6
         <CheatEntry>
           <ID>69</ID>
           <Description>"Chocolate"</Description>
-          <LastState Value="0" RealAddress="0853DDE0"/>
           <VariableType>4 Bytes</VariableType>
           <Address>"popcapgame1.exe"+00119014</Address>
           <Offsets>
@@ -433,7 +713,6 @@ db 89 45 5C 8B C6
         <CheatEntry>
           <ID>39</ID>
           <Description>"I Zombie Win Streak"</Description>
-          <LastState Value="0" RealAddress="11E2E1DC"/>
           <VariableType>4 Bytes</VariableType>
           <Address>"popcapgame1.exe"+0010D8C4</Address>
           <Offsets>
@@ -447,7 +726,6 @@ db 89 45 5C 8B C6
         <CheatEntry>
           <ID>66</ID>
           <Description>"Vasebreaker Streak"</Description>
-          <LastState Value="0" RealAddress="11E2E1DC"/>
           <VariableType>4 Bytes</VariableType>
           <Address>"THREADSTACK0"-0000057C</Address>
           <Offsets>
@@ -460,7 +738,7 @@ db 89 45 5C 8B C6
         <CheatEntry>
           <ID>72</ID>
           <Description>"Giant Tree Height"</Description>
-          <LastState Value="0" RealAddress="0853DCAC"/>
+          <LastState Value="0" RealAddress="0863DCAC"/>
           <VariableType>4 Bytes</VariableType>
           <Address>"popcapgame1.exe"+00119014</Address>
           <Offsets>
@@ -1849,6 +2127,51 @@ dealloc(SelectedPlantsBase)
         <Byte>24</Byte>
       </After>
     </CodeEntry>
+    <CodeEntry>
+      <Description>Writes To Current Row Mouse Is Over :mov [edi+28],edx</Description>
+      <AddressString>popcapgame1.exe+3BFF9</AddressString>
+      <Before>
+        <Byte>8B</Byte>
+        <Byte>77</Byte>
+        <Byte>24</Byte>
+        <Byte>8B</Byte>
+        <Byte>D0</Byte>
+      </Before>
+      <Actual>
+        <Byte>89</Byte>
+        <Byte>57</Byte>
+        <Byte>28</Byte>
+      </Actual>
+      <After>
+        <Byte>85</Byte>
+        <Byte>F6</Byte>
+        <Byte>0F</Byte>
+        <Byte>8C</Byte>
+        <Byte>8C</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry>
+      <Description>Written When PIkcup Shovel :mov [ecx],esi</Description>
+      <AddressString>popcapgame1.exe+11F891</AddressString>
+      <Before>
+        <Byte>96</Byte>
+        <Byte>72</Byte>
+        <Byte>00</Byte>
+        <Byte>DD</Byte>
+        <Byte>E1</Byte>
+      </Before>
+      <Actual>
+        <Byte>89</Byte>
+        <Byte>31</Byte>
+      </Actual>
+      <After>
+        <Byte>C7</Byte>
+        <Byte>41</Byte>
+        <Byte>04</Byte>
+        <Byte>01</Byte>
+        <Byte>00</Byte>
+      </After>
+    </CodeEntry>
   </CheatCodes>
   <UserdefinedSymbols/>
   <DisassemblerComments>
@@ -1884,6 +2207,11 @@ ecx+30 is mouse item hold state
     <DisassemblerComment>
       <Address>"popcapgame1.exe"+1844F</Address>
       <Comment>Update Fog Timer
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"popcapgame1.exe"+1E6E0</Address>
+      <Comment>Pickup Sun Function
 </Comment>
     </DisassemblerComment>
     <DisassemblerComment>
